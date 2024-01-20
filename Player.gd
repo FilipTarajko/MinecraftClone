@@ -8,6 +8,7 @@ const JUMP_VELOCITY = 5.0
 
 var camera_stick
 var camera
+var camera_raycast
 
 var is_in_third_person = true
 var default_camera_offset
@@ -15,6 +16,7 @@ var default_camera_offset
 func _ready():
 	camera_stick = get_node("CameraStick")
 	camera = get_node("CameraStick/Camera3D")
+	camera_raycast = get_node("CameraStick/Camera3D/RayCast3D")
 	default_camera_offset = camera.position
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
@@ -66,6 +68,11 @@ func _physics_process(delta):
 		var mouse_velocity = Input.get_last_mouse_velocity()
 		camera_stick.rotate_y(-mouse_velocity.x*X_SENSITIVITY)
 		camera_stick.rotate_object_local(Vector3.RIGHT, -mouse_velocity.y*Y_SENSITIVITY)
+	if camera_raycast.is_colliding():
+		var obj = camera_raycast.get_collider()
+		if Input.is_action_just_pressed("hit"):
+			print("hitting: "+obj.get_name())
+			obj.queue_free()
 
 
 	move_and_slide()
