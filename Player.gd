@@ -9,8 +9,8 @@ const JUMP_VELOCITY = 5.0
 @onready var camera = get_node("CameraStick/Camera3D")
 @onready var camera_raycast = get_node("CameraStick/Camera3D/RayCast3D")
 @onready var world = get_node("../World")
+@onready var game = $".."
 @onready var block_highlighter = get_node("../BlockHighlighter")
-@onready var textures = [preload("res://block_images/grass.png"), preload("res://block_images/dirt.png")]
 
 var is_in_third_person = true
 @onready var default_camera_offset = camera.position
@@ -21,7 +21,7 @@ var block_to_place = preload("res://block.tscn")
 func _physics_process(delta):
 	handle_movement(delta)
 
-func _process(delta):
+func _process(_delta):
 	handle_third_person_toggle()
 	handle_raycast_interactions()
 
@@ -83,6 +83,6 @@ func handle_raycast_interactions():
 		var new_block = block_to_place.instantiate()
 		var collision_normal = camera_raycast.get_collision_normal()
 		var collision_point = camera_raycast.get_collision_point()
-		new_block.get_child(1).mesh.material.albedo_texture = textures[randi()%2]
+		new_block.get_node("MeshInstance3D").mesh = game.meshes[randi() % len(game.meshes)]
 		new_block.position = (collision_point+collision_normal/2).round() 
 		world.add_child(new_block)

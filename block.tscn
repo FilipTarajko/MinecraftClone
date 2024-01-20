@@ -1,15 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://q5d3xumgyoic"]
+[gd_scene load_steps=3 format=3 uid="uid://q5d3xumgyoic"]
 
-[ext_resource type="Texture2D" uid="uid://7kv4cvbwxhcy" path="res://block_images/grass.png" id="1_48upu"]
+[ext_resource type="BoxMesh" uid="uid://c5wlc2dmxb1w7" path="res://blocks/base_block_mesh.tres" id="1_uj83h"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_l7amf"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dkllr"]
-albedo_texture = ExtResource("1_48upu")
-texture_filter = 0
-
-[sub_resource type="BoxMesh" id="BoxMesh_jk477"]
-material = SubResource("StandardMaterial3D_dkllr")
 
 [node name="Block" type="StaticBody3D"]
 
@@ -17,4 +10,4 @@ material = SubResource("StandardMaterial3D_dkllr")
 shape = SubResource("BoxShape3D_l7amf")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("BoxMesh_jk477")
+mesh = ExtResource("1_uj83h")

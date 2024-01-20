@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="Block_Resource" load_steps=3 format=3 uid="uid://dcv2phrfiangp"]
+
+[ext_resource type="Texture2D" uid="uid://umj5j61vbc7s" path="res://block_images/stone.png" id="1_0bxq7"]
+[ext_resource type="Script" path="res://block_type.gd" id="2_2qal0"]
+
+[resource]
+script = ExtResource("2_2qal0")
+name = "grass"
+image = ExtResource("1_0bxq7")
