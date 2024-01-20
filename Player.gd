@@ -7,9 +7,15 @@ const SPEED = 6.0
 const JUMP_VELOCITY = 5.0
 
 var camera_stick
+var camera
+
+var is_in_third_person = true
+var default_camera_offset
 
 func _ready():
 	camera_stick = get_node("CameraStick")
+	camera = get_node("CameraStick/Camera3D")
+	default_camera_offset = camera.position
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -24,6 +30,14 @@ func _unhandled_input(event):
 				Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 			elif (Input.mouse_mode == Input.MOUSE_MODE_VISIBLE):
 				Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		if event.pressed and event.keycode == KEY_F5:
+			if is_in_third_person:
+				camera.position = Vector3(0, 0, 0)
+				is_in_third_person = false
+			else:
+				camera.position = default_camera_offset
+				is_in_third_person = true
+
 
 func _physics_process(delta):
 	if Input.is_key_pressed(KEY_R):
