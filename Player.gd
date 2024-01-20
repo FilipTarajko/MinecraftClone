@@ -3,17 +3,27 @@ extends CharacterBody3D
 const X_SENSITIVITY = 0.0001
 const Y_SENSITIVITY = 0.0001
 
-const SPEED = 5.0
-const JUMP_VELOCITY = 4.5
+const SPEED = 6.0
+const JUMP_VELOCITY = 5.0
 
 var camera_stick
 
 func _ready():
 	camera_stick = get_node("CameraStick")
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
+func _unhandled_input(event):
+	if event is InputEventKey:
+		if event.pressed and event.keycode == KEY_ESCAPE:
+			get_tree().quit()
+		if event.pressed and event.keycode == KEY_E:
+			if (Input.mouse_mode == Input.MOUSE_MODE_CAPTURED):
+				Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+			elif (Input.mouse_mode == Input.MOUSE_MODE_VISIBLE):
+				Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func _physics_process(delta):
 	if Input.is_key_pressed(KEY_R):
@@ -38,9 +48,10 @@ func _physics_process(delta):
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
-	var mouse_velocity = Input.get_last_mouse_velocity()
-	camera_stick.rotate_y(-mouse_velocity.x*X_SENSITIVITY)
-	camera_stick.rotate_object_local(Vector3.RIGHT, -mouse_velocity.y*Y_SENSITIVITY)
+	if (Input.mouse_mode == Input.MOUSE_MODE_CAPTURED):
+		var mouse_velocity = Input.get_last_mouse_velocity()
+		camera_stick.rotate_y(-mouse_velocity.x*X_SENSITIVITY)
+		camera_stick.rotate_object_local(Vector3.RIGHT, -mouse_velocity.y*Y_SENSITIVITY)
 
 
 	move_and_slide()
