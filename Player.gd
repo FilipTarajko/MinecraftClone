@@ -5,19 +5,15 @@ const Y_SENSITIVITY = 0.0001
 const SPEED = 6.0
 const JUMP_VELOCITY = 5.0
 
-var camera_stick
-var camera
-var camera_raycast
+@onready var camera_stick = get_node("CameraStick")
+@onready var camera = get_node("CameraStick/Camera3D")
+@onready var camera_raycast = get_node("CameraStick/Camera3D/RayCast3D")
+@onready var world = get_node("../World")
+
 var is_in_third_person = true
-var default_camera_offset
+@onready var default_camera_offset = camera.position
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
-
-
-func _ready():
-	camera_stick = get_node("CameraStick")
-	camera = get_node("CameraStick/Camera3D")
-	camera_raycast = get_node("CameraStick/Camera3D/RayCast3D")
-	default_camera_offset = camera.position
+var block_to_place = preload("res://block.tscn")
 
 
 func _physics_process(delta):
@@ -66,3 +62,9 @@ func handle_raycast_interactions():
 		var obj = camera_raycast.get_collider()
 		if Input.is_action_just_pressed("hit"):
 			obj.queue_free()
+		if Input.is_action_just_pressed("use"):
+			var new_block = block_to_place.instantiate()
+			var collision_normal = camera_raycast.get_collision_normal()
+			var collision_point = camera_raycast.get_collision_point()
+			new_block.position = (collision_point+collision_normal/2).round() 
+			world.add_child(new_block)
