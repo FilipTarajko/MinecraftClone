@@ -1,5 +1,7 @@
 extends Node3D
 
+@onready var world = $World
+
 @export var blocks: Array[Block_Resource]
 var meshes: Array[BoxMesh]
 var base_block_mesh = preload("res://blocks/base_block_mesh.tres")
@@ -11,6 +13,7 @@ func _ready():
 		var new_mesh = base_block_mesh.duplicate(true)
 		new_mesh.material.albedo_texture = block.image
 		meshes.push_back(new_mesh)
+	world.generate_terrain()
 
 
 func _unhandled_input(event):

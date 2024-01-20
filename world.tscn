@@ -2,12 +2,12 @@
 
 [ext_resource type="Script" path="res://Game.gd" id="1_kwi7l"]
 [ext_resource type="Resource" uid="uid://c7f54ah4jp5j6" path="res://blocks/dirt.tres" id="2_4r5x2"]
-[ext_resource type="PackedScene" uid="uid://q5d3xumgyoic" path="res://block.tscn" id="2_23aia"]
 [ext_resource type="Script" path="res://Player.gd" id="2_5701q"]
 [ext_resource type="Script" path="res://DebugDisplay.gd" id="3_b8epg"]
 [ext_resource type="Resource" uid="uid://3mxem2ai0o8n" path="res://blocks/grass.tres" id="3_uab6h"]
 [ext_resource type="Resource" uid="uid://dcv2phrfiangp" path="res://blocks/stone.tres" id="4_32riu"]
 [ext_resource type="Texture2D" uid="uid://dxk5gtfgsspot" path="res://materials/grid2.png" id="5_h1n1c"]
+[ext_resource type="Script" path="res://World.gd" id="6_l11q7"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bgmbc"]
 transparency = 2
@@ -32,17 +32,7 @@ blocks = Array[Resource("res://block_type.gd")]([ExtResource("2_4r5x2"), ExtReso
 mesh = SubResource("BoxMesh_68wkq")
 
 [node name="World" type="Node3D" parent="."]
-
-[node name="Block" parent="World" instance=ExtResource("2_23aia")]
-
-[node name="Block2" parent="World" instance=ExtResource("2_23aia")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
-
-[node name="Block3" parent="World" instance=ExtResource("2_23aia")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
-
-[node name="Block4" parent="World" instance=ExtResource("2_23aia")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
+script = ExtResource("6_l11q7")
 
 [node name="Player" type="CharacterBody3D" parent="."]
 transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 0, 2, 0)

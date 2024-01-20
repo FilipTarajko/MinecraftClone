@@ -15,7 +15,8 @@ const JUMP_VELOCITY = 5.0
 var is_in_third_person = true
 @onready var default_camera_offset = camera.position
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
-var block_to_place = preload("res://block.tscn")
+
+var is_game_just_started = true
 
 
 func _physics_process(delta):
@@ -61,7 +62,8 @@ func _input(event):
 
 
 func handle_third_person_toggle():
-	if (Input.is_action_just_pressed("toggle_third_person_mode")):
+	if (Input.is_action_just_pressed("toggle_third_person_mode")) || is_game_just_started:
+		is_game_just_started = false
 		if is_in_third_person:
 			camera.position = Vector3(0, 0, 0)
 			is_in_third_person = false
@@ -80,9 +82,7 @@ func handle_raycast_interactions():
 	if Input.is_action_just_pressed("hit"):
 		obj.queue_free()
 	if Input.is_action_just_pressed("use"):
-		var new_block = block_to_place.instantiate()
 		var collision_normal = camera_raycast.get_collision_normal()
 		var collision_point = camera_raycast.get_collision_point()
-		new_block.get_node("MeshInstance3D").mesh = game.meshes[randi() % len(game.meshes)]
-		new_block.position = (collision_point+collision_normal/2).round() 
-		world.add_child(new_block)
+		var new_block_position = (collision_point+collision_normal/2).round() 
+		world.place_block(new_block_position)
