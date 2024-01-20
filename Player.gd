@@ -10,6 +10,7 @@ const JUMP_VELOCITY = 5.0
 @onready var camera_raycast = get_node("CameraStick/Camera3D/RayCast3D")
 @onready var world = get_node("../World")
 @onready var block_highlighter = get_node("../BlockHighlighter")
+@onready var textures = [preload("res://block_images/grass.png"), preload("res://block_images/dirt.png")]
 
 var is_in_third_person = true
 @onready var default_camera_offset = camera.position
@@ -44,6 +45,7 @@ func handle_movement(delta):
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 	move_and_slide()
 
+
 func _input(event):
 	if event is InputEventMouseMotion && Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		# pan
@@ -56,6 +58,7 @@ func _input(event):
 			to_tilt = -PI/2-camera_stick.rotation.x
 		else:
 			camera_stick.rotate_object_local(Vector3.RIGHT, to_tilt)
+
 
 func handle_third_person_toggle():
 	if (Input.is_action_just_pressed("toggle_third_person_mode")):
@@ -80,5 +83,6 @@ func handle_raycast_interactions():
 		var new_block = block_to_place.instantiate()
 		var collision_normal = camera_raycast.get_collision_normal()
 		var collision_point = camera_raycast.get_collision_point()
+		new_block.get_child(1).mesh.material.albedo_texture = textures[randi()%2]
 		new_block.position = (collision_point+collision_normal/2).round() 
 		world.add_child(new_block)
