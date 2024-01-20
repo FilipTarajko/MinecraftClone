@@ -18,6 +18,8 @@ var block_to_place = preload("res://block.tscn")
 
 func _physics_process(delta):
 	handle_movement(delta)
+
+func _process(delta):
 	handle_camera(delta)
 	handle_raycast_interactions()
 
@@ -46,8 +48,16 @@ func handle_camera(delta):
 	# camera rotation
 	if (Input.mouse_mode == Input.MOUSE_MODE_CAPTURED):
 		var mouse_velocity = Input.get_last_mouse_velocity()
-		camera_stick.rotate_y(-mouse_velocity.x*X_SENSITIVITY)
-		camera_stick.rotate_object_local(Vector3.RIGHT, -mouse_velocity.y*Y_SENSITIVITY)
+		camera_stick.rotate_y(-mouse_velocity.x*X_SENSITIVITY) # pan
+		var to_tilt = -mouse_velocity.y*Y_SENSITIVITY
+		if to_tilt > 0 && to_tilt > PI/2-camera_stick.rotation.x-to_tilt:
+			to_tilt = PI/2-camera_stick.rotation.x
+			print(PI/2-camera_stick.rotation.x-to_tilt)
+		elif to_tilt < 0 && to_tilt < -PI/2-camera_stick.rotation.x-to_tilt:
+			to_tilt = -PI/2-camera_stick.rotation.x
+			print(-PI/2-camera_stick.rotation.x-to_tilt)
+		else:
+			camera_stick.rotate_object_local(Vector3.RIGHT, to_tilt) # tilt
 	if (Input.is_action_just_pressed("toggle_third_person_mode")):
 		if is_in_third_person:
 			camera.position = Vector3(0, 0, 0)
