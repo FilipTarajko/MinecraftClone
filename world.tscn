@@ -1,9 +1,21 @@
-[gd_scene load_steps=7 format=3 uid="uid://0au071xpn1ce"]
+[gd_scene load_steps=10 format=3 uid="uid://0au071xpn1ce"]
 
 [ext_resource type="Script" path="res://Game.gd" id="1_kwi7l"]
 [ext_resource type="PackedScene" uid="uid://q5d3xumgyoic" path="res://block.tscn" id="2_23aia"]
 [ext_resource type="Script" path="res://Player.gd" id="2_5701q"]
 [ext_resource type="Script" path="res://DebugDisplay.gd" id="3_b8epg"]
+[ext_resource type="Texture2D" uid="uid://dxk5gtfgsspot" path="res://materials/grid2.png" id="5_h1n1c"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bgmbc"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+albedo_texture = ExtResource("5_h1n1c")
+texture_filter = 0
+
+[sub_resource type="BoxMesh" id="BoxMesh_68wkq"]
+material = SubResource("StandardMaterial3D_bgmbc")
+size = Vector3(1.01, 1.01, 1.01)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_k1agf"]
 
@@ -11,6 +23,9 @@
 
 [node name="Game" type="Node3D"]
 script = ExtResource("1_kwi7l")
+
+[node name="BlockHighlighter" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_68wkq")
 
 [node name="World" type="Node3D" parent="."]
 
