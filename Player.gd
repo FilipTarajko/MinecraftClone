@@ -18,20 +18,12 @@ func _ready():
 	camera = get_node("CameraStick/Camera3D")
 	camera_raycast = get_node("CameraStick/Camera3D/RayCast3D")
 	default_camera_offset = camera.position
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 func _unhandled_input(event):
 	if event is InputEventKey:
-		if event.pressed and event.keycode == KEY_ESCAPE:
-			get_tree().quit()
-		if event.pressed and event.keycode == KEY_E:
-			if (Input.mouse_mode == Input.MOUSE_MODE_CAPTURED):
-				Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-			elif (Input.mouse_mode == Input.MOUSE_MODE_VISIBLE):
-				Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 		if event.pressed and event.keycode == KEY_F5:
 			if is_in_third_person:
 				camera.position = Vector3(0, 0, 0)

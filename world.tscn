@@ -1,5 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://0au071xpn1ce"]
+[gd_scene load_steps=9 format=3 uid="uid://0au071xpn1ce"]
 
+[ext_resource type="Script" path="res://Game.gd" id="1_kwi7l"]
 [ext_resource type="Script" path="res://Player.gd" id="2_5701q"]
 [ext_resource type="Script" path="res://FpsCounter.gd" id="3_b8epg"]
 
@@ -16,6 +17,7 @@ material = SubResource("StandardMaterial3D_dkllr")
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_8cqx5"]
 
 [node name="Game" type="Node3D"]
+script = ExtResource("1_kwi7l")
 
 [node name="World" type="Node3D" parent="."]
 
@@ -74,6 +76,7 @@ mesh = SubResource("BoxMesh_jk477")
 
 [node name="Player" type="CharacterBody3D" parent="."]
 transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 0, 2, 0)
+collision_layer = 2
 script = ExtResource("2_5701q")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
