@@ -36,7 +36,6 @@ func _ready():
 		if block_type.obtainable:
 			obtainable_blocks_indexes.push_back(index)
 		index += 1
-	print(blocks)
 	world.generate_terrain()
 
 
