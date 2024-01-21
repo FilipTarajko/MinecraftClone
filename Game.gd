@@ -21,9 +21,9 @@ func _ready():
 	for block_type in block_types:
 		var new_block
 		if block_type.gravity:
-			new_block = rigidbody_block.duplicate(true).instantiate()
+			new_block = rigidbody_block.duplicate(false).instantiate()
 		else:
-			new_block = static_block.duplicate(true).instantiate()
+			new_block = static_block.duplicate(false).instantiate()
 		if block_type.transparent:
 			new_block.get_node("MeshInstance3D").mesh = transparent_block_mesh.duplicate(true)
 		else:
