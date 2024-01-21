@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://c7x6ujuk1jofs"]
+[gd_scene load_steps=6 format=3 uid="uid://c7x6ujuk1jofs"]
 
 [ext_resource type="Texture2D" uid="uid://7u371g58ndeq" path="res://block_images/dirt.png" id="1_jm4f0"]
+[ext_resource type="Script" path="res://block_broken_particles.gd" id="2_7qrqu"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sg5rk"]
 albedo_texture = ExtResource("1_jm4f0")
@@ -26,3 +27,6 @@ lifetime = 0.3
 one_shot = true
 process_material = SubResource("ParticleProcessMaterial_2546h")
 draw_pass_1 = SubResource("BoxMesh_twq4g")
+script = ExtResource("2_7qrqu")
+
+[connection signal="finished" from="." to="." method="_on_finished"]

@@ -1,13 +1,14 @@
 extends Node3D
 
 @onready var game = $".."
+@export var blocks: Node3D
 var platform_range = 8
 var platform_depth = 4#16
 
 func place_block(new_block_position, index):
 	var new_block = game.blocks[index].duplicate(false)
 	new_block.position = new_block_position
-	add_child(new_block)
+	blocks.add_child(new_block)
 
 func place_obtainable_block(new_block_position):
 	place_block(new_block_position, game.obtainable_blocks_indexes.pick_random())

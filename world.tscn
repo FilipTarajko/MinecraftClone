@@ -36,8 +36,11 @@ block_types = Array[Resource("res://block_type.gd")]([ExtResource("2_o577k"), Ex
 [node name="BlockHighlighter" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_68wkq")
 
-[node name="World" type="Node3D" parent="."]
+[node name="World" type="Node3D" parent="." node_paths=PackedStringArray("blocks")]
 script = ExtResource("6_l11q7")
+blocks = NodePath("Blocks")
+
+[node name="Blocks" type="Node3D" parent="World"]
 
 [node name="Player" type="CharacterBody3D" parent="."]
 transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 0, 2, 0)
