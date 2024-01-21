@@ -85,4 +85,4 @@ func handle_raycast_interactions():
 		var collision_normal = camera_raycast.get_collision_normal()
 		var collision_point = camera_raycast.get_collision_point()
 		var new_block_position = (collision_point+collision_normal/2).round() 
-		world.place_block(new_block_position)
+		world.place_obtainable_block(new_block_position)

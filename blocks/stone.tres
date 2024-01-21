@@ -7,3 +7,7 @@
 script = ExtResource("2_2qal0")
 name = "stone"
 image = ExtResource("1_0bxq7")
+transparent = false
+gravity = false
+commonly_spawned = true
+obtainable = true

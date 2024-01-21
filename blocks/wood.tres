@@ -7,3 +7,7 @@
 script = ExtResource("2_w0cd8")
 name = "wood"
 image = ExtResource("1_1b2l8")
+transparent = false
+gravity = false
+commonly_spawned = false
+obtainable = true

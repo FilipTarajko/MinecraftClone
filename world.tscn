@@ -1,8 +1,9 @@
-[gd_scene load_steps=16 format=3 uid="uid://0au071xpn1ce"]
+[gd_scene load_steps=17 format=3 uid="uid://0au071xpn1ce"]
 
 [ext_resource type="Script" path="res://Game.gd" id="1_kwi7l"]
 [ext_resource type="Resource" uid="uid://c7f54ah4jp5j6" path="res://blocks/dirt.tres" id="2_4r5x2"]
 [ext_resource type="Script" path="res://Player.gd" id="2_5701q"]
+[ext_resource type="Resource" uid="uid://b3m4rurkugxxh" path="res://blocks/bedrock.tres" id="2_o577k"]
 [ext_resource type="Script" path="res://DebugDisplay.gd" id="3_b8epg"]
 [ext_resource type="Resource" uid="uid://3mxem2ai0o8n" path="res://blocks/grass.tres" id="3_uab6h"]
 [ext_resource type="Resource" uid="uid://dcv2phrfiangp" path="res://blocks/stone.tres" id="4_32riu"]
@@ -29,7 +30,7 @@ size = Vector3(1.01, 1.01, 1.01)
 
 [node name="Game" type="Node3D"]
 script = ExtResource("1_kwi7l")
-block_types = Array[Resource("res://block_type.gd")]([ExtResource("2_4r5x2"), ExtResource("3_uab6h"), ExtResource("4_32riu"), ExtResource("5_eg1wa"), ExtResource("6_qihfv"), ExtResource("7_jw8us")])
+block_types = Array[Resource("res://block_type.gd")]([ExtResource("2_o577k"), ExtResource("2_4r5x2"), ExtResource("3_uab6h"), ExtResource("4_32riu"), ExtResource("5_eg1wa"), ExtResource("6_qihfv"), ExtResource("7_jw8us")])
 
 [node name="BlockHighlighter" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_68wkq")

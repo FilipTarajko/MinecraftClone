@@ -9,3 +9,5 @@ name = "gravel"
 image = ExtResource("1_y8f7q")
 transparent = false
 gravity = true
+commonly_spawned = true
+obtainable = true

@@ -4,6 +4,9 @@ extends Node3D
 
 @export var block_types: Array[Block_Resource]
 var blocks: Array[PhysicsBody3D] = []
+var name_to_index_dictionary = {}
+var commonly_spawned_blocks_indexes = []
+var obtainable_blocks_indexes = []
 
 var static_block = preload("res://static_block.tscn")
 var rigidbody_block = preload("res://rigidbody_block.tscn")
@@ -12,9 +15,9 @@ var base_block_mesh = preload("res://blocks/base_block_mesh.tres")
 var transparent_block_mesh = preload("res://blocks/transparent_block_mesh.tres")
 var i = 0
 
-
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	var index = 0
 	for block_type in block_types:
 		var new_block
 		if block_type.gravity:
@@ -27,6 +30,12 @@ func _ready():
 			new_block.get_node("MeshInstance3D").mesh = base_block_mesh.duplicate(true)
 		new_block.get_node("MeshInstance3D").mesh.material.albedo_texture = block_type.image
 		blocks.push_back(new_block.duplicate(true))
+		name_to_index_dictionary[block_type.name] = index
+		if block_type.commonly_spawned:
+			commonly_spawned_blocks_indexes.push_back(index)
+		if block_type.obtainable:
+			obtainable_blocks_indexes.push_back(index)
+		index += 1
 	print(blocks)
 	world.generate_terrain()
 

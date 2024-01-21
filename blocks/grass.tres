@@ -7,3 +7,7 @@
 script = ExtResource("2_fa5ic")
 name = "grass"
 image = ExtResource("1_0cshs")
+transparent = false
+gravity = false
+commonly_spawned = true
+obtainable = false
