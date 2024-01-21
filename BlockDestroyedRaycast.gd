@@ -5,7 +5,7 @@ var block_destroyed_raycast: PackedScene
 var world: Node3D
 
 
-func _process(delta):
+func _process(_delta):
 	if is_colliding() && get_collider():
 		var block = get_collider()
 		if block is RigidBody3D:

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Block_Resource" load_steps=3 format=3 uid="uid://cwqeybxskhhlt"]
+
+[ext_resource type="Texture2D" uid="uid://ctobc5g6xcjhn" path="res://blocks/images/dark_wood.png" id="1_5b4g2"]
+[ext_resource type="Script" path="res://blocks/block_type.gd" id="2_junxh"]
+
+[resource]
+script = ExtResource("2_junxh")
+name = "dark_wood"
+image = ExtResource("1_5b4g2")
+transparent = false
+gravity = false
+commonly_spawned = false
+obtainable = true

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Block_Resource" load_steps=3 format=3 uid="uid://dgivmb01ty84m"]
+
+[ext_resource type="Texture2D" uid="uid://xr8vd5gn3jep" path="res://blocks/images/sand.png" id="1_isrlj"]
+[ext_resource type="Script" path="res://blocks/block_type.gd" id="2_jcofv"]
+
+[resource]
+script = ExtResource("2_jcofv")
+name = "sand"
+image = ExtResource("1_isrlj")
+transparent = false
+gravity = true
+commonly_spawned = true
+obtainable = true

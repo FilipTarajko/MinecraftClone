@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Block_Resource" load_steps=3 format=3 uid="uid://dfg2pnxrbcqg"]
+
+[ext_resource type="Texture2D" uid="uid://y5vsbhnhv86g" path="res://blocks/images/birch_wood.png" id="1_jte32"]
+[ext_resource type="Script" path="res://blocks/block_type.gd" id="2_wq277"]
+
+[resource]
+script = ExtResource("2_wq277")
+name = "birch_wood"
+image = ExtResource("1_jte32")
+transparent = false
+gravity = false
+commonly_spawned = false
+obtainable = true
