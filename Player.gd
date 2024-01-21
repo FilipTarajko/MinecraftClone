@@ -13,6 +13,8 @@ const JUMP_VELOCITY = 5.0
 @export var block_highlighter: Node3D
 @export var block_broken_particles: PackedScene
 @export var block_destroyed_raycast: PackedScene
+@export var block_space_checker: Area3D
+var entities_in_checked_area: int
 
 
 var is_in_third_person = true
@@ -86,10 +88,11 @@ func handle_raycast_interactions():
 	var obj = camera_raycast.get_collider()
 	if Input.is_action_just_pressed("hit"):
 		handle_destroy_block(obj)
-	if Input.is_action_just_pressed("use"):
-		var collision_normal = camera_raycast.get_collision_normal()
-		var collision_point = camera_raycast.get_collision_point()
-		var new_block_position = (collision_point+collision_normal/2).round() 
+	var collision_normal = camera_raycast.get_collision_normal()
+	var collision_point = camera_raycast.get_collision_point()
+	var new_block_position = (collision_point+collision_normal/2).round()
+	block_space_checker.position = new_block_position
+	if Input.is_action_just_pressed("use") && entities_in_checked_area == 0:
 		world.place_obtainable_block(new_block_position)
 
 
@@ -105,3 +108,11 @@ func handle_destroy_block(block):
 	raycast.position = block.position
 	world.add_child(raycast)
 	block.queue_free()
+
+
+func _on_block_space_checker_body_entered(_body):
+	entities_in_checked_area += 1
+
+
+func _on_block_space_checker_body_exited(body):
+	entities_in_checked_area -= 1

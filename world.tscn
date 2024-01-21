@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://0au071xpn1ce"]
+[gd_scene load_steps=30 format=3 uid="uid://0au071xpn1ce"]
 
 [ext_resource type="Script" path="res://Game.gd" id="1_kwi7l"]
 [ext_resource type="Resource" uid="uid://c7f54ah4jp5j6" path="res://blocks/types/dirt.tres" id="2_4r5x2"]
@@ -36,6 +36,8 @@ texture_filter = 0
 material = SubResource("StandardMaterial3D_bgmbc")
 size = Vector3(1.01, 1.01, 1.01)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_q7fon"]
+
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_k1agf"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_8cqx5"]
@@ -52,6 +54,13 @@ transparent_block_mesh = ExtResource("12_hmqxh")
 [node name="BlockHighlighter" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_68wkq")
 
+[node name="BlockSpaceChecker" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BlockSpaceChecker"]
+shape = SubResource("BoxShape3D_q7fon")
+
 [node name="World" type="Node3D" parent="." node_paths=PackedStringArray("game", "blocks")]
 script = ExtResource("6_l11q7")
 game = NodePath("..")
@@ -60,7 +69,7 @@ rigidbody_script = ExtResource("15_08ogl")
 
 [node name="Blocks" type="Node3D" parent="World"]
 
-[node name="Player" type="CharacterBody3D" parent="." node_paths=PackedStringArray("camera_stick", "camera", "camera_raycast", "world", "game", "block_highlighter")]
+[node name="Player" type="CharacterBody3D" parent="." node_paths=PackedStringArray("camera_stick", "camera", "camera_raycast", "world", "game", "block_highlighter", "block_space_checker")]
 transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 0, 2, 0)
 collision_layer = 2
 script = ExtResource("2_5701q")
@@ -72,6 +81,7 @@ game = NodePath("..")
 block_highlighter = NodePath("../BlockHighlighter")
 block_broken_particles = ExtResource("13_mkwhk")
 block_destroyed_raycast = ExtResource("19_n3tt6")
+block_space_checker = NodePath("../BlockSpaceChecker")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
 shape = SubResource("CapsuleShape3D_k1agf")
@@ -164,3 +174,6 @@ offset_right = 0.5
 offset_bottom = 15.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[connection signal="body_entered" from="BlockSpaceChecker" to="Player" method="_on_block_space_checker_body_entered"]
+[connection signal="body_exited" from="BlockSpaceChecker" to="Player" method="_on_block_space_checker_body_exited"]
