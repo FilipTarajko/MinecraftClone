@@ -16,8 +16,6 @@ func place_block(new_block_position, index):
 
 func place_obtainable_block(new_block_position):
 	var placed_block = place_block(new_block_position, game.obtainable_blocks_indexes.pick_random())
-	if placed_block is RigidBody3D:
-		placed_block.freeze = false
 
 func place_commonly_spawned_block(new_block_position):
 	place_block(new_block_position, game.commonly_spawned_blocks_indexes.pick_random())

@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://bwqp0h1hfj787"]
+
+[ext_resource type="Script" path="res://BlockDestroyedRaycast.gd" id="1_3aa1a"]
+
+[node name="BlockDestroyedRaycast" type="RayCast3D"]
+target_position = Vector3(0, 1, 0)
+script = ExtResource("1_3aa1a")

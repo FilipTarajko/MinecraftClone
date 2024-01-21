@@ -12,6 +12,7 @@ const JUMP_VELOCITY = 5.0
 @export var game: Node3D
 @export var block_highlighter: Node3D
 @export var block_broken_particles: PackedScene
+@export var block_destroyed_raycast: PackedScene
 
 var is_in_third_person = true
 @onready var default_camera_offset = camera.position
@@ -86,6 +87,11 @@ func handle_raycast_interactions():
 		particles.position = obj.position
 		particles.emitting = true
 		world.add_child(particles)
+		var raycast = block_destroyed_raycast.instantiate()
+		raycast.block_destroyed_raycast = block_destroyed_raycast
+		raycast.world = world
+		raycast.position = obj.position
+		world.add_child(raycast)
 		obj.queue_free()
 	if Input.is_action_just_pressed("use"):
 		var collision_normal = camera_raycast.get_collision_normal()
