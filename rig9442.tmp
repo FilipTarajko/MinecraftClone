@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://cxwopura8fu48"]
+
+[ext_resource type="Script" path="res://rigidbody_block.gd" id="1_oayh1"]
+[ext_resource type="BoxMesh" uid="uid://c5wlc2dmxb1w7" path="res://blocks/base_block_mesh.tres" id="1_pf34u"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_l7amf"]
+
+[node name="Block" type="RigidBody3D"]
+axis_lock_linear_x = true
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+script = ExtResource("1_oayh1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_l7amf")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = ExtResource("1_pf34u")

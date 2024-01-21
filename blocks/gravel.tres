@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Block_Resource" load_steps=3 format=3 uid="uid://dgh2o2ss81hea"]
+
+[ext_resource type="Texture2D" uid="uid://na5vaer3gj77" path="res://block_images/gravel.png" id="1_y8f7q"]
+[ext_resource type="Script" path="res://block_type.gd" id="2_wa56d"]
+
+[resource]
+script = ExtResource("2_wa56d")
+name = "gravel"
+image = ExtResource("1_y8f7q")
+transparent = false
+gravity = true

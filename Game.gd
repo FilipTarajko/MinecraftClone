@@ -2,22 +2,32 @@ extends Node3D
 
 @onready var world = $World
 
-@export var blocks: Array[Block_Resource]
-var meshes: Array[BoxMesh]
+@export var block_types: Array[Block_Resource]
+var blocks: Array[PhysicsBody3D] = []
+
+var static_block = preload("res://static_block.tscn")
+var rigidbody_block = preload("res://rigidbody_block.tscn")
+
 var base_block_mesh = preload("res://blocks/base_block_mesh.tres")
 var transparent_block_mesh = preload("res://blocks/transparent_block_mesh.tres")
+var i = 0
 
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	for block in blocks:
-		var new_mesh
-		if block.transparent:
-			new_mesh = transparent_block_mesh.duplicate(true)
+	for block_type in block_types:
+		var new_block
+		if block_type.gravity:
+			new_block = rigidbody_block.duplicate(true).instantiate()
 		else:
-			new_mesh = base_block_mesh.duplicate(true)
-		new_mesh.material.albedo_texture = block.image
-		meshes.push_back(new_mesh)
+			new_block = static_block.duplicate(true).instantiate()
+		if block_type.transparent:
+			new_block.get_node("MeshInstance3D").mesh = transparent_block_mesh.duplicate(true)
+		else:
+			new_block.get_node("MeshInstance3D").mesh = base_block_mesh.duplicate(true)
+		new_block.get_node("MeshInstance3D").mesh.material.albedo_texture = block_type.image
+		blocks.push_back(new_block.duplicate(true))
+	print(blocks)
 	world.generate_terrain()
 
 
