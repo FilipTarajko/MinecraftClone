@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://c7x6ujuk1jofs"]
+
+[ext_resource type="Texture2D" uid="uid://7u371g58ndeq" path="res://block_images/dirt.png" id="1_jm4f0"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sg5rk"]
+albedo_texture = ExtResource("1_jm4f0")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_2546h"]
+lifetime_randomness = 0.5
+particle_flag_align_y = true
+emission_shape_scale = Vector3(0.5, 0.5, 0.5)
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+spread = 180.0
+initial_velocity_max = 1.0
+scale_min = 0.01
+scale_max = 0.1
+
+[sub_resource type="BoxMesh" id="BoxMesh_twq4g"]
+
+[node name="BlockBrokenParticles" type="GPUParticles3D"]
+material_override = SubResource("StandardMaterial3D_sg5rk")
+emitting = false
+amount = 10
+lifetime = 0.3
+one_shot = true
+process_material = SubResource("ParticleProcessMaterial_2546h")
+draw_pass_1 = SubResource("BoxMesh_twq4g")

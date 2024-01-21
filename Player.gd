@@ -12,6 +12,8 @@ const JUMP_VELOCITY = 5.0
 @onready var game = $".."
 @onready var block_highlighter = get_node("../BlockHighlighter")
 
+@export var block_broken_particles: PackedScene
+
 var is_in_third_person = true
 @onready var default_camera_offset = camera.position
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -80,6 +82,11 @@ func handle_raycast_interactions():
 	block_highlighter.position = camera_raycast.get_collider().position
 	var obj = camera_raycast.get_collider()
 	if Input.is_action_just_pressed("hit"):
+		var particles = block_broken_particles.instantiate()
+		particles.material_override = obj.get_node("MeshInstance3D").mesh.material
+		particles.position = obj.position
+		particles.emitting = true
+		world.add_child(particles)
 		obj.queue_free()
 	if Input.is_action_just_pressed("use"):
 		var collision_normal = camera_raycast.get_collision_normal()
