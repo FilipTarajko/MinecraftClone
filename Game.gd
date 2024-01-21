@@ -3,10 +3,13 @@ extends Node3D
 @export var world: Node3D
 
 @export var block_types: Array[Block_Resource]
+@export var block_broken_particles: PackedScene
+@export var block_destroyed_raycast: PackedScene
 var blocks: Array[PhysicsBody3D] = []
 var name_to_index_dictionary = {}
 var commonly_spawned_blocks_indexes = []
 var obtainable_blocks_indexes = []
+var transparent_blocks_indexes = []
 
 @export var static_block: PackedScene
 @export var rigidbody_block: PackedScene
@@ -23,6 +26,7 @@ func _ready():
 			index+=1
 			var new_block = rigidbody_block.duplicate(false).instantiate()
 			blocks.push_back(new_block.duplicate(true))
+			transparent_blocks_indexes.push_back(0)
 			continue
 		var new_block
 		if block_type.gravity:
@@ -30,6 +34,7 @@ func _ready():
 		else:
 			new_block = static_block.duplicate(false).instantiate()
 		if block_type.transparent:
+			transparent_blocks_indexes.push_back(index)
 			new_block.get_node("MeshInstance3D").mesh = transparent_block_mesh.duplicate(true)
 		else:
 			new_block.get_node("MeshInstance3D").mesh = base_block_mesh.duplicate(true)

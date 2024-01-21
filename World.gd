@@ -55,7 +55,57 @@ func check_if_any_face_visible(x, y, z):
 		return false
 	if x == 0 || x == platform_lenght-1 || y == 0 || y == max_height || z == 0 || z == platform_lenght - 1:
 		return true
-	return blocks[x-1][y][z]==0 || blocks[x+1][y][z]==0 || blocks[x][y-1][z]==0 || blocks[x][y+1][z]==0 || blocks[x][y][z-1]==0 || blocks[x][y][z+1]==0 
+	return game.transparent_blocks_indexes.has(blocks[x-1][y][z]) || game.transparent_blocks_indexes.has(blocks[x+1][y][z]) \
+		|| game.transparent_blocks_indexes.has(blocks[x][y-1][z]) || game.transparent_blocks_indexes.has(blocks[x][y+1][z]) \
+		|| game.transparent_blocks_indexes.has(blocks[x][y][z-1]) || game.transparent_blocks_indexes.has(blocks[x][y][z+1]) 
+
+
+func check_neighboring_blocks_visibilities(x, y, z):
+	return [
+		x>0 && check_if_any_face_visible(x-1, y, z),
+		x<platform_lenght-1 && check_if_any_face_visible(x+1, y, z),
+		y>0 && check_if_any_face_visible(x, y-1, z),
+		y<max_height-1 && check_if_any_face_visible(x, y+1, z),
+		z>0 && check_if_any_face_visible(x, y, z-1),
+		z<platform_lenght-1 && check_if_any_face_visible(x, y, z+1),
+	]
+
+
+func handle_destroy_block(block):
+	var x = block.position.x
+	var y = block.position.y
+	var z = block.position.z
+	var particles = game.block_broken_particles.instantiate()
+	particles.material_override = block.get_node("MeshInstance3D").mesh.material
+	particles.position = block.position
+	particles.emitting = true
+	add_child(particles)
+	var neighboring_visilities_before = check_neighboring_blocks_visibilities(x, y, z)
+	print(neighboring_visilities_before)
+	blocks[x][y][z] = 0
+	var neighboring_visilities_after = check_neighboring_blocks_visibilities(x, y, z)
+	for i in range(6):
+		if !neighboring_visilities_before[i] && neighboring_visilities_after[i]:
+			match i:
+				0:
+					create_mesh_and_collider(x-1, y, z)
+				1:
+					create_mesh_and_collider(x+1, y, z)
+				2:
+					create_mesh_and_collider(x, y-1, z)
+				3:
+					create_mesh_and_collider(x, y+1, z)
+				4:
+					create_mesh_and_collider(x, y, z-1)
+				5:
+					create_mesh_and_collider(x, y, z+1)
+	print(neighboring_visilities_after)
+	var raycast = game.block_destroyed_raycast.instantiate()
+	raycast.block_destroyed_raycast = game.block_destroyed_raycast
+	raycast.world = self
+	raycast.position = block.position
+	add_child(raycast)
+	block.queue_free()
 
 
 func place_block(new_block_position, index):
@@ -67,13 +117,13 @@ func place_block(new_block_position, index):
 	new_block.position = new_block_position
 	new_block.name = game.blocks[index].name
 	blocks_object.add_child(new_block)
-	
-	
 	return new_block
 
 
-func place_obtainable_block(new_block_position):
-	var placed_block = place_block(new_block_position, game.obtainable_blocks_indexes.pick_random())
+func place_and_save_obtainable_block(new_block_position):
+	var block_index = game.obtainable_blocks_indexes.pick_random()
+	blocks[new_block_position.x][new_block_position.y][new_block_position.z] = block_index
+	var placed_block = place_block(new_block_position, block_index)
 	if placed_block is RigidBody3D:
 		placed_block.freeze = false
 
