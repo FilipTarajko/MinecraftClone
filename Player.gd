@@ -82,19 +82,23 @@ func handle_raycast_interactions():
 	block_highlighter.position = camera_raycast.get_collider().position
 	var obj = camera_raycast.get_collider()
 	if Input.is_action_just_pressed("hit"):
-		var particles = block_broken_particles.instantiate()
-		particles.material_override = obj.get_node("MeshInstance3D").mesh.material
-		particles.position = obj.position
-		particles.emitting = true
-		world.add_child(particles)
-		var raycast = block_destroyed_raycast.instantiate()
-		raycast.block_destroyed_raycast = block_destroyed_raycast
-		raycast.world = world
-		raycast.position = obj.position
-		world.add_child(raycast)
-		obj.queue_free()
+		handle_destroy_block(obj)
 	if Input.is_action_just_pressed("use"):
 		var collision_normal = camera_raycast.get_collision_normal()
 		var collision_point = camera_raycast.get_collision_point()
 		var new_block_position = (collision_point+collision_normal/2).round() 
 		world.place_obtainable_block(new_block_position)
+
+
+func handle_destroy_block(block):
+	var particles = block_broken_particles.instantiate()
+	particles.material_override = block.get_node("MeshInstance3D").mesh.material
+	particles.position = block.position
+	particles.emitting = true
+	world.add_child(particles)
+	var raycast = block_destroyed_raycast.instantiate()
+	raycast.block_destroyed_raycast = block_destroyed_raycast
+	raycast.world = world
+	raycast.position = block.position
+	world.add_child(raycast)
+	block.queue_free()

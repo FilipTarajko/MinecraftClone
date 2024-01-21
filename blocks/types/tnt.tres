@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Block_Resource" load_steps=3 format=3 uid="uid://vnmv8vkjs2w7"]
+
+[ext_resource type="Texture2D" uid="uid://b2ricgygbqice" path="res://blocks/images/tnt.png" id="1_grr1o"]
+[ext_resource type="Script" path="res://blocks/block_type.gd" id="2_x0d1r"]
+
+[resource]
+script = ExtResource("2_x0d1r")
+name = "tnt"
+image = ExtResource("1_grr1o")
+transparent = false
+gravity = false
+commonly_spawned = false
+obtainable = true

@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://0au071xpn1ce"]
+[gd_scene load_steps=28 format=3 uid="uid://0au071xpn1ce"]
 
 [ext_resource type="Script" path="res://Game.gd" id="1_kwi7l"]
 [ext_resource type="Resource" uid="uid://c7f54ah4jp5j6" path="res://blocks/types/dirt.tres" id="2_4r5x2"]
@@ -19,6 +19,7 @@
 [ext_resource type="BoxMesh" uid="uid://c5wlc2dmxb1w7" path="res://blocks/base_block_mesh.tres" id="11_7ja7n"]
 [ext_resource type="Resource" uid="uid://dgivmb01ty84m" path="res://blocks/types/sand.tres" id="11_160op"]
 [ext_resource type="BoxMesh" uid="uid://mljtfnek823x" path="res://blocks/transparent_block_mesh.tres" id="12_hmqxh"]
+[ext_resource type="Resource" uid="uid://vnmv8vkjs2w7" path="res://blocks/types/tnt.tres" id="12_ul31o"]
 [ext_resource type="PackedScene" uid="uid://c7x6ujuk1jofs" path="res://blocks/particles/block_broken_particles.tscn" id="13_mkwhk"]
 [ext_resource type="Script" path="res://blocks/rigidbody_block.gd" id="15_08ogl"]
 [ext_resource type="PackedScene" uid="uid://bwqp0h1hfj787" path="res://block_destroyed_raycast.tscn" id="19_n3tt6"]
@@ -41,7 +42,7 @@ size = Vector3(1.01, 1.01, 1.01)
 [node name="Game" type="Node3D" node_paths=PackedStringArray("world")]
 script = ExtResource("1_kwi7l")
 world = NodePath("World")
-block_types = Array[Resource("res://blocks/block_type.gd")]([ExtResource("2_o577k"), ExtResource("2_4r5x2"), ExtResource("3_uab6h"), ExtResource("4_32riu"), ExtResource("5_eg1wa"), ExtResource("6_qihfv"), ExtResource("7_jw8us"), ExtResource("9_largw"), ExtResource("10_5iu17"), ExtResource("11_160op")])
+block_types = Array[Resource("res://blocks/block_type.gd")]([ExtResource("2_o577k"), ExtResource("2_4r5x2"), ExtResource("3_uab6h"), ExtResource("4_32riu"), ExtResource("5_eg1wa"), ExtResource("6_qihfv"), ExtResource("7_jw8us"), ExtResource("9_largw"), ExtResource("10_5iu17"), ExtResource("11_160op"), ExtResource("12_ul31o")])
 static_block = ExtResource("9_wt3g0")
 rigidbody_block = ExtResource("10_c6sbh")
 base_block_mesh = ExtResource("11_7ja7n")
