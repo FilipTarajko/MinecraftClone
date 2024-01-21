@@ -3,6 +3,9 @@ extends RigidBody3D
 var last_velocity = 1
 
 
+var blockname: String
+
+
 func _physics_process(_delta):
 	if not freeze:
 		if last_velocity == 0 && linear_velocity.y == 0:

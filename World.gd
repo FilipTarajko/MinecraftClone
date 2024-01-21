@@ -11,6 +11,7 @@ func place_block(new_block_position, index):
 	if new_block is RigidBody3D:
 		new_block.set_script(rigidbody_script)
 	new_block.position = new_block_position
+	new_block.name = game.blocks[index].name
 	blocks.add_child(new_block)
 	return new_block
 

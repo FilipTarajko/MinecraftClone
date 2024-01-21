@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://0au071xpn1ce"]
+[gd_scene load_steps=29 format=3 uid="uid://0au071xpn1ce"]
 
 [ext_resource type="Script" path="res://Game.gd" id="1_kwi7l"]
 [ext_resource type="Resource" uid="uid://c7f54ah4jp5j6" path="res://blocks/types/dirt.tres" id="2_4r5x2"]
@@ -23,6 +23,7 @@
 [ext_resource type="PackedScene" uid="uid://c7x6ujuk1jofs" path="res://blocks/particles/block_broken_particles.tscn" id="13_mkwhk"]
 [ext_resource type="Script" path="res://blocks/rigidbody_block.gd" id="15_08ogl"]
 [ext_resource type="PackedScene" uid="uid://bwqp0h1hfj787" path="res://block_destroyed_raycast.tscn" id="19_n3tt6"]
+[ext_resource type="Script" path="res://RaycastsTooltip.gd" id="24_m6kpj"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bgmbc"]
 transparency = 2
@@ -103,12 +104,27 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="UI" node_paths=PackedStringArray("player")]
+[node name="DebugDisplayLabel" type="Label" parent="UI" node_paths=PackedStringArray("player")]
 layout_mode = 0
 offset_right = 66.0
 offset_bottom = 23.0
 text = "FPS: N/A"
 script = ExtResource("3_b8epg")
+player = NodePath("../../Player")
+
+[node name="RaycastsTooltip" type="Label" parent="UI" node_paths=PackedStringArray("player")]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -56.5
+offset_right = 56.5
+offset_bottom = 23.0
+grow_horizontal = 2
+text = "block:
+N/A"
+horizontal_alignment = 1
+script = ExtResource("24_m6kpj")
 player = NodePath("../../Player")
 
 [node name="Crosshair" type="Control" parent="UI"]

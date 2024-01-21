@@ -14,10 +14,11 @@ const JUMP_VELOCITY = 5.0
 @export var block_broken_particles: PackedScene
 @export var block_destroyed_raycast: PackedScene
 
+
 var is_in_third_person = true
 @onready var default_camera_offset = camera.position
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
-
+var raycasted_object_name = ""
 var is_game_just_started = true
 
 
@@ -77,7 +78,9 @@ func handle_third_person_toggle():
 func handle_raycast_interactions():
 	if !camera_raycast.is_colliding() || !camera_raycast.get_collider():
 		block_highlighter.hide()
+		raycasted_object_name = ""
 		return
+	raycasted_object_name = camera_raycast.get_collider().name
 	block_highlighter.show()
 	block_highlighter.position = camera_raycast.get_collider().position
 	var obj = camera_raycast.get_collider()
