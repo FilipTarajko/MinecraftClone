@@ -5,12 +5,17 @@ extends Node3D
 @export var blocks: Array[Block_Resource]
 var meshes: Array[BoxMesh]
 var base_block_mesh = preload("res://blocks/base_block_mesh.tres")
+var transparent_block_mesh = preload("res://blocks/transparent_block_mesh.tres")
 
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	for block in blocks:
-		var new_mesh = base_block_mesh.duplicate(true)
+		var new_mesh
+		if block.transparent:
+			new_mesh = transparent_block_mesh.duplicate(true)
+		else:
+			new_mesh = base_block_mesh.duplicate(true)
 		new_mesh.material.albedo_texture = block.image
 		meshes.push_back(new_mesh)
 	world.generate_terrain()

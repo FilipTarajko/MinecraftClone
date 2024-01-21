@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Block_Resource" load_steps=3 format=3 uid="uid://p5ac35b1c0a6"]
+
+[ext_resource type="Texture2D" uid="uid://dqkuexpc0ip32" path="res://block_images/glass.png" id="1_vwupt"]
+[ext_resource type="Script" path="res://block_type.gd" id="2_2pv3t"]
+
+[resource]
+script = ExtResource("2_2pv3t")
+name = "glass"
+image = ExtResource("1_vwupt")
+transparent = true

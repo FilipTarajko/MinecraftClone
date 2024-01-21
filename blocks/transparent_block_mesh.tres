@@ -1,0 +1,11 @@
+[gd_resource type="BoxMesh" load_steps=3 format=3 uid="uid://mljtfnek823x"]
+
+[ext_resource type="Texture2D" uid="uid://dqkuexpc0ip32" path="res://block_images/glass.png" id="1_7jcnk"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i7mv7"]
+transparency = 1
+albedo_texture = ExtResource("1_7jcnk")
+texture_filter = 0
+
+[resource]
+material = SubResource("StandardMaterial3D_i7mv7")
