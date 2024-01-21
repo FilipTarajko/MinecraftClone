@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dge7gb5pot284"
-path="res://.godot/imported/wood.png-ac7cf7bbabefb830ae6d671ed1550bba.ctex"
+uid="uid://hxw4anf0etqv"
+path="res://.godot/imported/bedrock.png-f4077d4473e3c5f16541072e3dd9fb85.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://block_images/wood.png"
-dest_files=["res://.godot/imported/wood.png-ac7cf7bbabefb830ae6d671ed1550bba.ctex"]
+source_file="res://blocks/images/bedrock.png"
+dest_files=["res://.godot/imported/bedrock.png-f4077d4473e3c5f16541072e3dd9fb85.ctex"]
 
 [params]
 

@@ -1,6 +1,6 @@
 extends Node3D
 
-@onready var world = $World
+@export var world: Node3D
 
 @export var block_types: Array[Block_Resource]
 var blocks: Array[PhysicsBody3D] = []
@@ -8,11 +8,11 @@ var name_to_index_dictionary = {}
 var commonly_spawned_blocks_indexes = []
 var obtainable_blocks_indexes = []
 
-var static_block = preload("res://static_block.tscn")
-var rigidbody_block = preload("res://rigidbody_block.tscn")
+@export var static_block: PackedScene
+@export var rigidbody_block: PackedScene
 
-var base_block_mesh = preload("res://blocks/base_block_mesh.tres")
-var transparent_block_mesh = preload("res://blocks/transparent_block_mesh.tres")
+@export var base_block_mesh: BoxMesh
+@export var transparent_block_mesh: BoxMesh
 var i = 0
 
 func _ready():

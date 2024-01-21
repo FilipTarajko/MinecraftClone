@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://q5d3xumgyoic"]
 
-[ext_resource type="BoxMesh" uid="uid://c5wlc2dmxb1w7" path="res://blocks/base_block_mesh.tres" id="1_dnfok"]
+[ext_resource type="BoxMesh" uid="uid://c5wlc2dmxb1w7" path="res://blocks/base_block_mesh.tres" id="1_jnb6m"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_l7amf"]
 
@@ -10,4 +10,4 @@
 shape = SubResource("BoxShape3D_l7amf")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = ExtResource("1_dnfok")
+mesh = ExtResource("1_jnb6m")

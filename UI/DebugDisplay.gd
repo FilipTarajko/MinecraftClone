@@ -1,6 +1,6 @@
 extends Label
 
-@onready var player = $"../../Player"
+@export var player: Node3D
 var disabled = false
 
 func _process(_delta):

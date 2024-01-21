@@ -1,6 +1,6 @@
 extends Node3D
 
-@onready var game = $".."
+@export var game: Node3D
 @export var blocks: Node3D
 var platform_range = 8
 var platform_depth = 4#16

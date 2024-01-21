@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cxwopura8fu48"]
 
-[ext_resource type="BoxMesh" uid="uid://c5wlc2dmxb1w7" path="res://blocks/base_block_mesh.tres" id="1_pf34u"]
+[ext_resource type="BoxMesh" uid="uid://c5wlc2dmxb1w7" path="res://blocks/base_block_mesh.tres" id="1_bupnd"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_l7amf"]
 
@@ -17,4 +17,4 @@ lock_rotation = true
 shape = SubResource("BoxShape3D_l7amf")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = ExtResource("1_pf34u")
+mesh = ExtResource("1_bupnd")

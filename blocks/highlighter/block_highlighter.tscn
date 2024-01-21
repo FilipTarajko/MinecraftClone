@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://dm1gomd0m6ev2"]
+
+[ext_resource type="Texture2D" uid="uid://dxk5gtfgsspot" path="res://blocks/highlighter/highlighter_texture.png" id="1_g85aq"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bgmbc"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+albedo_texture = ExtResource("1_g85aq")
+texture_filter = 0
+
+[sub_resource type="BoxMesh" id="BoxMesh_68wkq"]
+material = SubResource("StandardMaterial3D_bgmbc")
+size = Vector3(1.01, 1.01, 1.01)
+
+[node name="BlockHighlighter" type="MeshInstance3D"]
+mesh = SubResource("BoxMesh_68wkq")

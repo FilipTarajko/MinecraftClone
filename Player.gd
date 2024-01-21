@@ -5,13 +5,12 @@ const Y_SENSITIVITY = 0.01
 const SPEED = 6.0
 const JUMP_VELOCITY = 5.0
 
-@onready var camera_stick = get_node("CameraStick")
-@onready var camera = get_node("CameraStick/Camera3D")
-@onready var camera_raycast = get_node("CameraStick/Camera3D/RayCast3D")
-@onready var world = get_node("../World")
-@onready var game = $".."
-@onready var block_highlighter = get_node("../BlockHighlighter")
-
+@export var camera_stick: Node3D
+@export var camera: Camera3D
+@export var camera_raycast: RayCast3D
+@export var world: Node3D
+@export var game: Node3D
+@export var block_highlighter: Node3D
 @export var block_broken_particles: PackedScene
 
 var is_in_third_person = true

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://hxw4anf0etqv"
-path="res://.godot/imported/bedrock.png-22903fafbaf6ccfe0f5a1b606eed051f.ctex"
+uid="uid://na5vaer3gj77"
+path="res://.godot/imported/gravel.png-f6eaf8ff2df084703366f6e9009b4be7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://block_images/bedrock.png"
-dest_files=["res://.godot/imported/bedrock.png-22903fafbaf6ccfe0f5a1b606eed051f.ctex"]
+source_file="res://blocks/images/gravel.png"
+dest_files=["res://.godot/imported/gravel.png-f6eaf8ff2df084703366f6e9009b4be7.ctex"]
 
 [params]
 

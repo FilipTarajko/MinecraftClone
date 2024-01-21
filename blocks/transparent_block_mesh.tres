@@ -1,6 +1,6 @@
 [gd_resource type="BoxMesh" load_steps=3 format=3 uid="uid://mljtfnek823x"]
 
-[ext_resource type="Texture2D" uid="uid://dqkuexpc0ip32" path="res://block_images/glass.png" id="1_7jcnk"]
+[ext_resource type="Texture2D" uid="uid://dqkuexpc0ip32" path="res://blocks/images/glass.png" id="1_7jcnk"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i7mv7"]
 transparency = 1
