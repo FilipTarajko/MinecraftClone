@@ -1,6 +1,6 @@
 extends Node3D
 
-@export var world: Node3D
+@export var chunk: Node3D
 
 @export var block_types: Array[Block_Resource]
 @export var block_broken_particles: PackedScene
@@ -46,7 +46,11 @@ func _ready():
 		if block_type.obtainable:
 			obtainable_blocks_indexes.push_back(index)
 		index += 1
-	world.generate_terrain()
+	chunk.generate_terrain()
+
+
+func get_chunk_by_vector3(vector):
+	return chunk
 
 
 func _unhandled_input(event):

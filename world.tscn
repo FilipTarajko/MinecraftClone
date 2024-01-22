@@ -42,9 +42,9 @@ size = Vector3(1.01, 1.01, 1.01)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_8cqx5"]
 
-[node name="Game" type="Node3D" node_paths=PackedStringArray("world")]
+[node name="Game" type="Node3D" node_paths=PackedStringArray("chunk")]
 script = ExtResource("1_kwi7l")
-world = NodePath("World")
+chunk = NodePath("Chunk")
 block_types = Array[Resource("res://blocks/block_type.gd")]([null, ExtResource("2_o577k"), ExtResource("4_32riu"), ExtResource("2_4r5x2"), ExtResource("3_uab6h"), ExtResource("5_eg1wa"), ExtResource("6_qihfv"), ExtResource("7_jw8us"), ExtResource("9_largw"), ExtResource("10_5iu17"), ExtResource("11_160op"), ExtResource("12_ul31o")])
 block_broken_particles = ExtResource("13_mkwhk")
 block_destroyed_raycast = ExtResource("19_n3tt6")
@@ -63,22 +63,21 @@ collision_mask = 2
 [node name="CollisionShape3D" type="CollisionShape3D" parent="BlockSpaceChecker"]
 shape = SubResource("BoxShape3D_q7fon")
 
-[node name="World" type="Node3D" parent="." node_paths=PackedStringArray("game", "blocks_object")]
+[node name="Chunk" type="Node3D" parent="." node_paths=PackedStringArray("game", "blocks_object")]
 script = ExtResource("6_l11q7")
 game = NodePath("..")
 blocks_object = NodePath("Blocks")
 rigidbody_script = ExtResource("15_08ogl")
 
-[node name="Blocks" type="Node3D" parent="World"]
+[node name="Blocks" type="Node3D" parent="Chunk"]
 
-[node name="Player" type="CharacterBody3D" parent="." node_paths=PackedStringArray("camera_stick", "camera", "camera_raycast", "world", "game", "block_highlighter", "block_space_checker")]
+[node name="Player" type="CharacterBody3D" parent="." node_paths=PackedStringArray("camera_stick", "camera", "camera_raycast", "game", "block_highlighter", "block_space_checker")]
 transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 8, 19, 8)
 collision_layer = 2
 script = ExtResource("2_5701q")
 camera_stick = NodePath("CameraStick")
 camera = NodePath("CameraStick/Camera3D")
 camera_raycast = NodePath("CameraStick/Camera3D/RayCast3D")
-world = NodePath("../World")
 game = NodePath("..")
 block_highlighter = NodePath("../BlockHighlighter")
 block_space_checker = NodePath("../BlockSpaceChecker")

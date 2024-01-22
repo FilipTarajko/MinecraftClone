@@ -8,7 +8,6 @@ const JUMP_VELOCITY = 5.0
 @export var camera_stick: Node3D
 @export var camera: Camera3D
 @export var camera_raycast: RayCast3D
-@export var world: Node3D
 @export var game: Node3D
 @export var block_highlighter: Node3D
 @export var block_space_checker: Area3D
@@ -75,31 +74,33 @@ func handle_third_person_toggle():
 			is_in_third_person = true
 
 
-func update_raycasted_object_name(pos_unrounded):
+func update_raycasted_object_name(pos_unrounded, chunk):
 	var pos = round(pos_unrounded)
 	var x = pos.x
 	var y = pos.y
 	var z = pos.z
-	if game.block_types[world.blocks[x][y][z]]:
-		raycasted_object_name = game.block_types[world.blocks[x][y][z]].name
+	if game.block_types[chunk.blocks[x][y][z]]:
+		raycasted_object_name = game.block_types[chunk.blocks[x][y][z]].name
 
 func handle_raycast_interactions():
 	if !camera_raycast.is_colliding() || !camera_raycast.get_collider():
 		block_highlighter.hide()
 		raycasted_object_name = ""
 		return
-	update_raycasted_object_name(camera_raycast.get_collider().position)
+	var collider_position = camera_raycast.get_collider().position
+	var chunk = game.get_chunk_by_vector3(collider_position)
+	update_raycasted_object_name(collider_position, chunk)
 	block_highlighter.show()
-	block_highlighter.position = camera_raycast.get_collider().position
+	block_highlighter.position = collider_position
 	var obj = camera_raycast.get_collider()
 	if Input.is_action_just_pressed("hit"):
-		world.handle_destroy_block(obj)
+		chunk.handle_destroy_block(obj)
 	var collision_normal = camera_raycast.get_collision_normal()
 	var collision_point = camera_raycast.get_collision_point()
 	var new_block_position = (collision_point+collision_normal/2).round()
 	block_space_checker.position = new_block_position
 	if Input.is_action_just_pressed("use") && entities_in_checked_area == 0:
-		world.try_place_and_save_obtainable_block(new_block_position)
+		chunk.try_place_and_save_obtainable_block(new_block_position)
 
 
 func _on_block_space_checker_body_entered(_body):

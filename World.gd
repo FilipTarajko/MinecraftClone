@@ -142,7 +142,7 @@ func handle_block_disappeared(block):
 					create_mesh_and_collider(x, y, z+1)
 	var raycast = game.block_destroyed_raycast.instantiate()
 	raycast.block_destroyed_raycast = game.block_destroyed_raycast
-	raycast.world = self
+	raycast.chunk = self
 	raycast.position = block.position
 	add_child(raycast)
 
@@ -176,7 +176,7 @@ func try_place_and_save_obtainable_block(new_block_position):
 	handle_block_appeared(new_block_position, block_index)
 	var placed_block = place_block(new_block_position, block_index)
 	if placed_block is RigidBody3D:
-		placed_block.world = self
+		placed_block.chunk = self
 		placed_block.block_index = block_index
 		if blocks[new_block_position.x][new_block_position.y-1][new_block_position.z] == 0:
 			placed_block.freeze = false
