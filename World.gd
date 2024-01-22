@@ -88,6 +88,39 @@ func check_neighboring_blocks_visibilities(x, y, z):
 		z<platform_lenght-1 && check_if_any_face_visible(x, y, z+1),
 	]
 
+func destroy_block_node(x, y, z):
+	for child in blocks_object.get_children():
+		if round(child.position.x) == round(x) and round(child.position.y) == round(y) and round(child.position.z) == round(z):
+			child.queue_free()
+
+
+func handle_block_appear(block_position, block_index):
+	var x = block_position.x
+	var y = block_position.y
+	var z = block_position.z
+	var neighboring_visilities_before = check_neighboring_blocks_visibilities(x, y, z)
+	blocks[x][y][z] = block_index
+	var neighboring_visilities_after = check_neighboring_blocks_visibilities(x, y, z)
+	for i in range(6):
+		if neighboring_visilities_before[i] && !neighboring_visilities_after[i]:
+			match i:
+				0:
+					destroy_block_node(x-1, y, z)
+				1:
+					destroy_block_node(x+1, y, z)
+				2:
+					destroy_block_node(x, y-1, z)
+				3:
+					destroy_block_node(x, y+1, z)
+				4:
+					destroy_block_node(x, y, z-1)
+				5:
+					destroy_block_node(x, y, z+1)
+	var placed_block = place_block(block_position, block_index)
+	if placed_block is RigidBody3D && blocks[x][y][z] == 0:
+		placed_block.freeze = false
+	
+
 
 func handle_block_disappear(block):
 	var x = block.position.x
@@ -144,10 +177,7 @@ func try_place_and_save_obtainable_block(new_block_position):
 	if blocks[new_block_position.x][new_block_position.y][new_block_position.z] != 0:
 		return
 	var block_index = game.obtainable_blocks_indexes.pick_random()
-	blocks[new_block_position.x][new_block_position.y][new_block_position.z] = block_index
-	var placed_block = place_block(new_block_position, block_index)
-	if placed_block is RigidBody3D:
-		placed_block.freeze = false
+	handle_block_appear(new_block_position, block_index)
 
 
 func place_commonly_spawned_block(new_block_position):
