@@ -80,7 +80,8 @@ func update_raycasted_object_name(pos_unrounded):
 	var x = pos.x
 	var y = pos.y
 	var z = pos.z
-	raycasted_object_name = game.block_types[world.blocks[x][y][z]].name
+	if game.block_types[world.blocks[x][y][z]]:
+		raycasted_object_name = game.block_types[world.blocks[x][y][z]].name
 
 func handle_raycast_interactions():
 	if !camera_raycast.is_colliding() || !camera_raycast.get_collider():

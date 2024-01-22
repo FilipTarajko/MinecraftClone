@@ -46,18 +46,27 @@ func draw_blocks():
 	for x in range(platform_lenght):
 		for y in range(max_height):
 			for z in range(platform_lenght):
-				if check_if_any_face_visible(x, y, z):
+				if check_if_any_face_visible(x, y, z, true):
 					create_mesh_and_collider(x, y, z)
 
 
-func check_if_any_face_visible(x, y, z):
+func check_if_any_face_visible(x, y, z, can_call_deeper=false):
 	if blocks[x][y][z] == 0:
 		return false
 	if x == 0 || x == platform_lenght-1 || y == 0 || y == max_height || z == 0 || z == platform_lenght - 1:
 		return true
-	return game.transparent_blocks_indexes.has(blocks[x-1][y][z]) || game.transparent_blocks_indexes.has(blocks[x+1][y][z]) \
-		|| game.transparent_blocks_indexes.has(blocks[x][y-1][z]) || game.transparent_blocks_indexes.has(blocks[x][y+1][z]) \
-		|| game.transparent_blocks_indexes.has(blocks[x][y][z-1]) || game.transparent_blocks_indexes.has(blocks[x][y][z+1]) 
+	if blocks[x-1][y][z]==0  || blocks[x+1][y][z]==0 || blocks[x][y-1][z]==0 || blocks[x][y+1][z]==0 || blocks[x][y][z-1]==0|| blocks[x][y][z+1]==0:
+		return true
+	if game.transparent_blocks_indexes.has(blocks[x-1][y][z]) && (not can_call_deeper || check_if_any_face_visible(x-1, y, z)) || \
+		game.transparent_blocks_indexes.has(blocks[x+1][y][z]) && (not can_call_deeper ||check_if_any_face_visible(x+1, y, z)) || \
+		game.transparent_blocks_indexes.has(blocks[x][y-1][z]) && (not can_call_deeper ||check_if_any_face_visible(x, y-1, z)) || \
+		game.transparent_blocks_indexes.has(blocks[x][y+1][z]) && (not can_call_deeper ||check_if_any_face_visible(x, y+1, z)) || \
+		game.transparent_blocks_indexes.has(blocks[x][y][z-1]) && (not can_call_deeper ||check_if_any_face_visible(x, y, z-1)) || \
+		game.transparent_blocks_indexes.has(blocks[x][y][z+1]) && (not can_call_deeper ||check_if_any_face_visible(x, y, z+1)):
+		return true
+	#return game.transparent_blocks_indexes.has(blocks[x-1][y][z]) || game.transparent_blocks_indexes.has(blocks[x+1][y][z]) \
+		#|| game.transparent_blocks_indexes.has(blocks[x][y-1][z]) || game.transparent_blocks_indexes.has(blocks[x][y+1][z]) \
+		#|| game.transparent_blocks_indexes.has(blocks[x][y][z-1]) || game.transparent_blocks_indexes.has(blocks[x][y][z+1]) 
 
 
 func check_neighboring_blocks_visibilities(x, y, z):
