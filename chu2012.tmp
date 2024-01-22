@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://nh058x8mnud7"]
+
+[ext_resource type="Script" path="res://Chunk.gd" id="20_37sij"]
+[ext_resource type="Script" path="res://blocks/rigidbody_block.gd" id="21_g2pa0"]
+
+[node name="Chunk" type="Node3D" node_paths=PackedStringArray("blocks_object")]
+script = ExtResource("20_37sij")
+blocks_object = NodePath("Blocks")
+rigidbody_script = ExtResource("21_g2pa0")
+
+[node name="Blocks" type="Node3D" parent="."]

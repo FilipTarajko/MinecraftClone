@@ -18,12 +18,16 @@ func _physics_process(_delta):
 
 
 func generate_terrain():
+	var noise_values = []
 	for x in range(game.chunk_lenght):
+		noise_values.push_back([])
 		blocks.push_back([])
 		for y in range(game.chunk_height):
 			blocks[x].push_back([])
 			for z in range(game.chunk_lenght):
-				var local_noise = game.noise.get_noise_2d(x+chunk_offset_x, z+chunk_offset_z)
+				if y == 0:
+					noise_values[x].push_back(game.noise.get_noise_2d(x+chunk_offset_x, z+chunk_offset_z))
+				var local_noise = noise_values[x][z]
 				var local_height = round(10*(local_noise+1)+5)
 				var block = 0 # air
 				if y == 0:
