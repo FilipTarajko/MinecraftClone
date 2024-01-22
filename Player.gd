@@ -124,7 +124,8 @@ func handle_raycast_interactions():
 	var new_block_position = (collision_point+collision_normal/2).round()
 	block_space_checker.position = new_block_position
 	if Input.is_action_just_pressed("use") && entities_in_checked_area == 0:
-		chunk.try_place_and_save_obtainable_block(new_block_position)
+		var build_chunk = game.get_chunk_by_vector3(new_block_position)
+		build_chunk.try_place_and_save_obtainable_block(new_block_position)
 
 
 func _on_block_space_checker_body_entered(_body):
