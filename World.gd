@@ -140,7 +140,9 @@ func place_block(new_block_position, index):
 	return new_block
 
 
-func place_and_save_obtainable_block(new_block_position):
+func try_place_and_save_obtainable_block(new_block_position):
+	if blocks[new_block_position.x][new_block_position.y][new_block_position.z] != 0:
+		return
 	var block_index = game.obtainable_blocks_indexes.pick_random()
 	blocks[new_block_position.x][new_block_position.y][new_block_position.z] = block_index
 	var placed_block = place_block(new_block_position, block_index)
