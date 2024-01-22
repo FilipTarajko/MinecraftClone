@@ -89,15 +89,10 @@ func check_neighboring_blocks_visibilities(x, y, z):
 	]
 
 
-func handle_destroy_block(block):
+func handle_block_disappear(block):
 	var x = block.position.x
 	var y = block.position.y
 	var z = block.position.z
-	var particles = game.block_broken_particles.instantiate()
-	particles.material_override = block.get_node("MeshInstance3D").mesh.material
-	particles.position = block.position
-	particles.emitting = true
-	add_child(particles)
 	var neighboring_visilities_before = check_neighboring_blocks_visibilities(x, y, z)
 	blocks[x][y][z] = 0
 	var neighboring_visilities_after = check_neighboring_blocks_visibilities(x, y, z)
@@ -121,6 +116,15 @@ func handle_destroy_block(block):
 	raycast.world = self
 	raycast.position = block.position
 	add_child(raycast)
+
+
+func handle_destroy_block(block):
+	var particles = game.block_broken_particles.instantiate()
+	particles.material_override = block.get_node("MeshInstance3D").mesh.material
+	particles.position = block.position
+	particles.emitting = true
+	add_child(particles)
+	handle_block_disappear(block)
 	block.queue_free()
 
 

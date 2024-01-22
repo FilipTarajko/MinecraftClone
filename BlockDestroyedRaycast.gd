@@ -9,6 +9,7 @@ func _process(_delta):
 	if is_colliding() && get_collider():
 		var block = get_collider()
 		if block is RigidBody3D:
+			world.handle_block_disappear(block)
 			block.freeze = false
 			block.last_velocity = 1
 		var raycast = block_destroyed_raycast.instantiate()
