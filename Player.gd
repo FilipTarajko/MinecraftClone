@@ -112,7 +112,7 @@ func handle_raycast_interactions():
 			last_hovered_occluder = null
 		
 		last_hovered_object = obj
-		last_hovered_occluder = last_hovered_object.get_node("OccluderInstance3D")
+		last_hovered_occluder = last_hovered_object.get_node_or_null("OccluderInstance3D")
 		if last_hovered_occluder:
 			last_hovered_object.remove_child(last_hovered_occluder)
 	
