@@ -94,7 +94,7 @@ func destroy_block_node(x, y, z):
 			child.queue_free()
 
 
-func handle_block_appear(block_position, block_index):
+func handle_block_appeared(block_position, block_index):
 	var x = block_position.x
 	var y = block_position.y
 	var z = block_position.z
@@ -116,17 +116,9 @@ func handle_block_appear(block_position, block_index):
 					destroy_block_node(x, y, z-1)
 				5:
 					destroy_block_node(x, y, z+1)
-	var placed_block = place_block(block_position, block_index)
-	if placed_block is RigidBody3D:
-		placed_block.world = self
-		placed_block.block_index = block_index
-		if blocks[x][y-1][z] == 0:
-			placed_block.freeze = false
-			handle_block_disappear(placed_block)
-	
 
 
-func handle_block_disappear(block):
+func handle_block_disappeared(block):
 	var x = block.position.x
 	var y = block.position.y
 	var z = block.position.z
@@ -161,7 +153,7 @@ func handle_destroy_block(block):
 	particles.position = block.position
 	particles.emitting = true
 	add_child(particles)
-	handle_block_disappear(block)
+	handle_block_disappeared(block)
 	block.queue_free()
 
 
@@ -181,7 +173,14 @@ func try_place_and_save_obtainable_block(new_block_position):
 	if blocks[new_block_position.x][new_block_position.y][new_block_position.z] != 0:
 		return
 	var block_index = game.obtainable_blocks_indexes.pick_random()
-	handle_block_appear(new_block_position, block_index)
+	handle_block_appeared(new_block_position, block_index)
+	var placed_block = place_block(new_block_position, block_index)
+	if placed_block is RigidBody3D:
+		placed_block.world = self
+		placed_block.block_index = block_index
+		if blocks[new_block_position.x][new_block_position.y-1][new_block_position.z] == 0:
+			placed_block.freeze = false
+			handle_block_disappeared(placed_block)
 
 
 func place_commonly_spawned_block(new_block_position):
