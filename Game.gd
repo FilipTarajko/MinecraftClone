@@ -1,6 +1,9 @@
 extends Node3D
 
-@export var chunks: Array[Node3D]
+var chunks: Array[Node3D]
+@export var chunks_in_x: int
+@export var chunks_in_z: int
+@export var chunk_scene: PackedScene
 
 @export var block_types: Array[Block_Resource]
 @export var block_broken_particles: PackedScene
@@ -49,17 +52,22 @@ func _ready():
 		if block_type.obtainable:
 			obtainable_blocks_indexes.push_back(index)
 		index += 1
-	for i in range(len(chunks)):
-		chunks[i].chunk_offset_x = i*chunk_lenght
-		chunks[i].chunk_offset_z = 0
-		chunks[i].generate_terrain()
+	for i in range(chunks_in_x):
+		for j in range(chunks_in_z):
+			var new_chunk = chunk_scene.instantiate()
+			new_chunk.chunk_offset_x = i*chunk_lenght
+			new_chunk.chunk_offset_z = j*chunk_lenght
+			new_chunk.game = self
+			add_child(new_chunk)
+			new_chunk.generate_terrain()
+			chunks.push_back(new_chunk)
 
 
 func get_chunk_by_vector3(vector):
-	var chunk_index = floor((vector.x) / 17.0)
-	#print(vector)
-	#print("chunk: %d" % chunk_index)
-	return chunks[chunk_index]
+	for chunk in chunks:
+		if chunk.chunk_offset_x == floor((vector.x) / chunk_lenght) * chunk_lenght \
+			&& chunk.chunk_offset_z == floor((vector.z) / chunk_lenght) * chunk_lenght:
+				return chunk
 
 
 func _unhandled_input(event):

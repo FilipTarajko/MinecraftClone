@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://0au071xpn1ce"]
+[gd_scene load_steps=29 format=3 uid="uid://0au071xpn1ce"]
 
 [ext_resource type="Script" path="res://Game.gd" id="1_b4iv1"]
 [ext_resource type="Resource" uid="uid://b3m4rurkugxxh" path="res://blocks/types/bedrock.tres" id="2_pyqsj"]
@@ -19,8 +19,7 @@
 [ext_resource type="BoxMesh" uid="uid://c5wlc2dmxb1w7" path="res://blocks/base_block_mesh.tres" id="17_tll6j"]
 [ext_resource type="BoxMesh" uid="uid://mljtfnek823x" path="res://blocks/transparent_block_mesh.tres" id="18_1c5gj"]
 [ext_resource type="Texture2D" uid="uid://dxk5gtfgsspot" path="res://blocks/highlighter/highlighter_texture.png" id="19_2lbbl"]
-[ext_resource type="Script" path="res://Chunk.gd" id="20_uh4xx"]
-[ext_resource type="Script" path="res://blocks/rigidbody_block.gd" id="21_hlofw"]
+[ext_resource type="PackedScene" uid="uid://nh058x8mnud7" path="res://chunk.tscn" id="20_yg3qg"]
 [ext_resource type="Script" path="res://Player.gd" id="22_8ngg1"]
 [ext_resource type="Script" path="res://UI/DebugDisplay.gd" id="23_wpiqm"]
 [ext_resource type="Script" path="res://RaycastsTooltip.gd" id="24_d2twu"]
@@ -42,9 +41,11 @@ size = Vector3(1.01, 1.01, 1.01)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_8cqx5"]
 
-[node name="Game" type="Node3D" node_paths=PackedStringArray("chunks")]
+[node name="Game" type="Node3D"]
 script = ExtResource("1_b4iv1")
-chunks = [NodePath("Chunk"), NodePath("Chunk2")]
+chunks_in_x = 2
+chunks_in_z = 2
+chunk_scene = ExtResource("20_yg3qg")
 block_types = Array[Resource("res://blocks/block_type.gd")]([null, ExtResource("2_pyqsj"), ExtResource("3_477vh"), ExtResource("4_p7h0w"), ExtResource("5_bvwxg"), ExtResource("6_8ubyb"), ExtResource("8_olfbr"), ExtResource("9_rh84c"), ExtResource("10_2ee2l"), ExtResource("11_2agrq"), ExtResource("12_ctcw6"), ExtResource("7_ecixk")])
 block_broken_particles = ExtResource("13_k1yes")
 block_destroyed_raycast = ExtResource("14_d1asu")
@@ -62,22 +63,6 @@ collision_mask = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="BlockSpaceChecker"]
 shape = SubResource("BoxShape3D_q7fon")
-
-[node name="Chunk" type="Node3D" parent="." node_paths=PackedStringArray("game", "blocks_object")]
-script = ExtResource("20_uh4xx")
-game = NodePath("..")
-blocks_object = NodePath("Blocks")
-rigidbody_script = ExtResource("21_hlofw")
-
-[node name="Blocks" type="Node3D" parent="Chunk"]
-
-[node name="Chunk2" type="Node3D" parent="." node_paths=PackedStringArray("game", "blocks_object")]
-script = ExtResource("20_uh4xx")
-game = NodePath("..")
-blocks_object = NodePath("../Chunk/Blocks")
-rigidbody_script = ExtResource("21_hlofw")
-
-[node name="Blocks" type="Node3D" parent="Chunk2"]
 
 [node name="Player" type="CharacterBody3D" parent="." node_paths=PackedStringArray("camera_stick", "camera", "camera_raycast", "game", "block_highlighter", "block_space_checker")]
 transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 8, 19, 8)

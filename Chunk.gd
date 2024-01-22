@@ -1,6 +1,6 @@
 extends Node3D
 
-@export var game: Node3D
+var game: Node3D
 @export var blocks_object: Node3D
 @export var rigidbody_script: Script
 var chunk_offset_x: int
@@ -27,8 +27,8 @@ func generate_terrain():
 				if y == 0:
 					block = 1 # bedrock
 				elif y < game.platform_height/2.0:
-					#block = 2 # stone
-					block = game.obtainable_blocks_indexes.pick_random()
+					block = 2 # stone
+					#block = game.obtainable_blocks_indexes.pick_random()
 				elif y < game.platform_height:
 					block = 3 # dirt
 				elif y == game.platform_height:
@@ -38,7 +38,7 @@ func generate_terrain():
 
 
 func create_mesh_and_collider(x, y, z):
-	place_block(Vector3(x+chunk_offset_x, y, z), blocks[x][y][z])
+	place_block(Vector3(x+chunk_offset_x, y, z+chunk_offset_z), blocks[x][y][z])
 
 
 func draw_blocks():
