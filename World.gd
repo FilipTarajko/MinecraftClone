@@ -117,7 +117,7 @@ func handle_block_appear(block_position, block_index):
 				5:
 					destroy_block_node(x, y, z+1)
 	var placed_block = place_block(block_position, block_index)
-	if placed_block is RigidBody3D && blocks[x][y][z] == 0:
+	if placed_block is RigidBody3D && blocks[x][y-1][z] == 0:
 		placed_block.freeze = false
 	
 
