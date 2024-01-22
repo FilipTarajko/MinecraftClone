@@ -43,8 +43,8 @@ size = Vector3(1.01, 1.01, 1.01)
 
 [node name="Game" type="Node3D"]
 script = ExtResource("1_b4iv1")
-chunks_in_x = 2
-chunks_in_z = 2
+chunks_in_x = 3
+chunks_in_z = 3
 chunk_scene = ExtResource("20_yg3qg")
 block_types = Array[Resource("res://blocks/block_type.gd")]([null, ExtResource("2_pyqsj"), ExtResource("3_477vh"), ExtResource("4_p7h0w"), ExtResource("5_bvwxg"), ExtResource("6_8ubyb"), ExtResource("8_olfbr"), ExtResource("9_rh84c"), ExtResource("10_2ee2l"), ExtResource("11_2agrq"), ExtResource("12_ctcw6"), ExtResource("7_ecixk")])
 block_broken_particles = ExtResource("13_k1yes")
@@ -65,7 +65,7 @@ collision_mask = 2
 shape = SubResource("BoxShape3D_q7fon")
 
 [node name="Player" type="CharacterBody3D" parent="." node_paths=PackedStringArray("camera_stick", "camera", "camera_raycast", "game", "block_highlighter", "block_space_checker")]
-transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 8, 19, 8)
+transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 17, 25, 17)
 collision_layer = 2
 script = ExtResource("22_8ngg1")
 camera_stick = NodePath("CameraStick")

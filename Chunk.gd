@@ -23,15 +23,17 @@ func generate_terrain():
 		for y in range(game.chunk_height):
 			blocks[x].push_back([])
 			for z in range(game.chunk_lenght):
+				var local_noise = game.noise.get_noise_2d(x+chunk_offset_x, z+chunk_offset_z)
+				var local_height = round(10*(local_noise+1)+5)
 				var block = 0 # air
 				if y == 0:
 					block = 1 # bedrock
-				elif y < game.platform_height/2.0:
+				elif y < local_height/2.0:
 					block = 2 # stone
 					#block = game.obtainable_blocks_indexes.pick_random()
-				elif y < game.platform_height:
+				elif y < local_height:
 					block = 3 # dirt
-				elif y == game.platform_height:
+				elif y == local_height:
 					block = 4 # grass
 				blocks[x][y].push_back(block)
 	draw_blocks()

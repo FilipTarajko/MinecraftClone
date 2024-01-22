@@ -5,6 +5,8 @@ var chunks: Array[Node3D]
 @export var chunks_in_z: int
 @export var chunk_scene: PackedScene
 
+var noise = FastNoiseLite.new();
+
 @export var block_types: Array[Block_Resource]
 @export var block_broken_particles: PackedScene
 @export var block_destroyed_raycast: PackedScene
@@ -25,6 +27,10 @@ var platform_height = 17
 @export var transparent_block_mesh: BoxMesh
 
 func _ready():
+	noise.seed = randi()
+	noise.noise_type = FastNoiseLite.TYPE_SIMPLEX
+	noise.fractal_octaves = 2
+	
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	var index = 0
 	for block_type in block_types:
