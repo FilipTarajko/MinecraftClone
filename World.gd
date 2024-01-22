@@ -51,22 +51,31 @@ func draw_blocks():
 
 
 func check_if_any_face_visible(x, y, z, can_call_deeper=false):
+	# check if is air - invisible
 	if blocks[x][y][z] == 0:
 		return false
+	
+	# check if edge of chunk - visible
 	if x == 0 || x == platform_lenght-1 || y == 0 || y == max_height || z == 0 || z == platform_lenght - 1:
 		return true
-	if blocks[x-1][y][z]==0  || blocks[x+1][y][z]==0 || blocks[x][y-1][z]==0 || blocks[x][y+1][z]==0 || blocks[x][y][z-1]==0|| blocks[x][y][z+1]==0:
+	
+	# check if neighbors air - visible
+	if blocks[x-1][y][z]==0 || blocks[x+1][y][z]==0 || blocks[x][y-1][z]==0 || blocks[x][y+1][z]==0 || blocks[x][y][z-1]==0 || blocks[x][y][z+1]==0:
 		return true
-	if game.transparent_blocks_indexes.has(blocks[x-1][y][z]) && (not can_call_deeper || check_if_any_face_visible(x-1, y, z)) || \
-		game.transparent_blocks_indexes.has(blocks[x+1][y][z]) && (not can_call_deeper ||check_if_any_face_visible(x+1, y, z)) || \
-		game.transparent_blocks_indexes.has(blocks[x][y-1][z]) && (not can_call_deeper ||check_if_any_face_visible(x, y-1, z)) || \
-		game.transparent_blocks_indexes.has(blocks[x][y+1][z]) && (not can_call_deeper ||check_if_any_face_visible(x, y+1, z)) || \
-		game.transparent_blocks_indexes.has(blocks[x][y][z-1]) && (not can_call_deeper ||check_if_any_face_visible(x, y, z-1)) || \
-		game.transparent_blocks_indexes.has(blocks[x][y][z+1]) && (not can_call_deeper ||check_if_any_face_visible(x, y, z+1)):
-		return true
-	#return game.transparent_blocks_indexes.has(blocks[x-1][y][z]) || game.transparent_blocks_indexes.has(blocks[x+1][y][z]) \
-		#|| game.transparent_blocks_indexes.has(blocks[x][y-1][z]) || game.transparent_blocks_indexes.has(blocks[x][y+1][z]) \
-		#|| game.transparent_blocks_indexes.has(blocks[x][y][z-1]) || game.transparent_blocks_indexes.has(blocks[x][y][z+1]) 
+	
+	# check if neighbors a visible transparent block
+	#if game.transparent_blocks_indexes.has(blocks[x-1][y][z]) && (not can_call_deeper || check_if_any_face_visible(x-1, y, z)) || \
+		#game.transparent_blocks_indexes.has(blocks[x+1][y][z]) && (not can_call_deeper ||check_if_any_face_visible(x+1, y, z)) || \
+		#game.transparent_blocks_indexes.has(blocks[x][y-1][z]) && (not can_call_deeper ||check_if_any_face_visible(x, y-1, z)) || \
+		#game.transparent_blocks_indexes.has(blocks[x][y+1][z]) && (not can_call_deeper ||check_if_any_face_visible(x, y+1, z)) || \
+		#game.transparent_blocks_indexes.has(blocks[x][y][z-1]) && (not can_call_deeper ||check_if_any_face_visible(x, y, z-1)) || \
+		#game.transparent_blocks_indexes.has(blocks[x][y][z+1]) && (not can_call_deeper ||check_if_any_face_visible(x, y, z+1)):
+		#return true
+	
+	# check if any neighbor is transparent
+	return game.transparent_blocks_indexes.has(blocks[x-1][y][z]) || game.transparent_blocks_indexes.has(blocks[x+1][y][z]) \
+		|| game.transparent_blocks_indexes.has(blocks[x][y-1][z]) || game.transparent_blocks_indexes.has(blocks[x][y+1][z]) \
+		|| game.transparent_blocks_indexes.has(blocks[x][y][z-1]) || game.transparent_blocks_indexes.has(blocks[x][y][z+1])
 
 
 func check_neighboring_blocks_visibilities(x, y, z):
