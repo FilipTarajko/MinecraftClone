@@ -1,0 +1,186 @@
+[gd_scene load_steps=30 format=3 uid="uid://0au071xpn1ce"]
+
+[ext_resource type="Script" path="res://Game.gd" id="1_b4iv1"]
+[ext_resource type="Resource" uid="uid://b3m4rurkugxxh" path="res://blocks/types/bedrock.tres" id="2_pyqsj"]
+[ext_resource type="Resource" uid="uid://dcv2phrfiangp" path="res://blocks/types/stone.tres" id="3_477vh"]
+[ext_resource type="Resource" uid="uid://c7f54ah4jp5j6" path="res://blocks/types/dirt.tres" id="4_p7h0w"]
+[ext_resource type="Resource" uid="uid://3mxem2ai0o8n" path="res://blocks/types/grass.tres" id="5_bvwxg"]
+[ext_resource type="Resource" uid="uid://dmtohjuv48e08" path="res://blocks/types/wood.tres" id="6_8ubyb"]
+[ext_resource type="Resource" uid="uid://p5ac35b1c0a6" path="res://blocks/types/glass.tres" id="7_ecixk"]
+[ext_resource type="Resource" uid="uid://dgh2o2ss81hea" path="res://blocks/types/gravel.tres" id="8_olfbr"]
+[ext_resource type="Resource" uid="uid://cwqeybxskhhlt" path="res://blocks/types/dark_wood.tres" id="9_rh84c"]
+[ext_resource type="Resource" uid="uid://dfg2pnxrbcqg" path="res://blocks/types/birch_wood.tres" id="10_2ee2l"]
+[ext_resource type="Resource" uid="uid://dgivmb01ty84m" path="res://blocks/types/sand.tres" id="11_2agrq"]
+[ext_resource type="Resource" uid="uid://vnmv8vkjs2w7" path="res://blocks/types/tnt.tres" id="12_ctcw6"]
+[ext_resource type="PackedScene" uid="uid://c7x6ujuk1jofs" path="res://blocks/particles/block_broken_particles.tscn" id="13_k1yes"]
+[ext_resource type="PackedScene" uid="uid://bwqp0h1hfj787" path="res://block_destroyed_raycast.tscn" id="14_d1asu"]
+[ext_resource type="PackedScene" uid="uid://q5d3xumgyoic" path="res://blocks/static_block.tscn" id="15_w8n05"]
+[ext_resource type="PackedScene" uid="uid://cxwopura8fu48" path="res://blocks/rigidbody_block.tscn" id="16_sg8y8"]
+[ext_resource type="BoxMesh" uid="uid://c5wlc2dmxb1w7" path="res://blocks/base_block_mesh.tres" id="17_tll6j"]
+[ext_resource type="BoxMesh" uid="uid://mljtfnek823x" path="res://blocks/transparent_block_mesh.tres" id="18_1c5gj"]
+[ext_resource type="Texture2D" uid="uid://dxk5gtfgsspot" path="res://blocks/highlighter/highlighter_texture.png" id="19_2lbbl"]
+[ext_resource type="Script" path="res://Chunk.gd" id="20_uh4xx"]
+[ext_resource type="Script" path="res://blocks/rigidbody_block.gd" id="21_hlofw"]
+[ext_resource type="Script" path="res://Player.gd" id="22_8ngg1"]
+[ext_resource type="Script" path="res://UI/DebugDisplay.gd" id="23_wpiqm"]
+[ext_resource type="Script" path="res://RaycastsTooltip.gd" id="24_d2twu"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bgmbc"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+albedo_texture = ExtResource("19_2lbbl")
+texture_filter = 0
+
+[sub_resource type="BoxMesh" id="BoxMesh_68wkq"]
+material = SubResource("StandardMaterial3D_bgmbc")
+size = Vector3(1.01, 1.01, 1.01)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_q7fon"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_k1agf"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_8cqx5"]
+
+[node name="Game" type="Node3D" node_paths=PackedStringArray("chunks")]
+script = ExtResource("1_b4iv1")
+chunks = [NodePath("Chunk"), NodePath("Chunk2")]
+block_types = Array[Resource("res://blocks/block_type.gd")]([null, ExtResource("2_pyqsj"), ExtResource("3_477vh"), ExtResource("4_p7h0w"), ExtResource("5_bvwxg"), ExtResource("6_8ubyb"), ExtResource("8_olfbr"), ExtResource("9_rh84c"), ExtResource("10_2ee2l"), ExtResource("11_2agrq"), ExtResource("12_ctcw6"), ExtResource("7_ecixk")])
+block_broken_particles = ExtResource("13_k1yes")
+block_destroyed_raycast = ExtResource("14_d1asu")
+static_block = ExtResource("15_w8n05")
+rigidbody_block = ExtResource("16_sg8y8")
+base_block_mesh = ExtResource("17_tll6j")
+transparent_block_mesh = ExtResource("18_1c5gj")
+
+[node name="BlockHighlighter" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_68wkq")
+
+[node name="BlockSpaceChecker" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BlockSpaceChecker"]
+shape = SubResource("BoxShape3D_q7fon")
+
+[node name="Chunk" type="Node3D" parent="." node_paths=PackedStringArray("game", "blocks_object")]
+script = ExtResource("20_uh4xx")
+game = NodePath("..")
+blocks_object = NodePath("Blocks")
+rigidbody_script = ExtResource("21_hlofw")
+
+[node name="Blocks" type="Node3D" parent="Chunk"]
+
+[node name="Chunk2" type="Node3D" parent="." node_paths=PackedStringArray("game", "blocks_object")]
+script = ExtResource("20_uh4xx")
+game = NodePath("..")
+blocks_object = NodePath("../Chunk/Blocks")
+rigidbody_script = ExtResource("21_hlofw")
+
+[node name="Blocks" type="Node3D" parent="Chunk2"]
+
+[node name="Player" type="CharacterBody3D" parent="." node_paths=PackedStringArray("camera_stick", "camera", "camera_raycast", "game", "block_highlighter", "block_space_checker")]
+transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 8, 19, 8)
+collision_layer = 2
+script = ExtResource("22_8ngg1")
+camera_stick = NodePath("CameraStick")
+camera = NodePath("CameraStick/Camera3D")
+camera_raycast = NodePath("CameraStick/Camera3D/RayCast3D")
+game = NodePath("..")
+block_highlighter = NodePath("../BlockHighlighter")
+block_space_checker = NodePath("../BlockSpaceChecker")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+shape = SubResource("CapsuleShape3D_k1agf")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player"]
+mesh = SubResource("CapsuleMesh_8cqx5")
+
+[node name="CameraStick" type="Node3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Player/CameraStick"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1.5)
+fov = 100.0
+
+[node name="RayCast3D" type="RayCast3D" parent="Player/CameraStick/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+target_position = Vector3(0, -10, 0)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.981293, 0.160727, -0.10598, 0, 0.550481, 0.834848, 0.192522, -0.81923, 0.540183, 0, 0, 0)
+shadow_enabled = true
+shadow_bias = 0.2
+shadow_opacity = 0.8
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DebugDisplayLabel" type="Label" parent="UI" node_paths=PackedStringArray("player")]
+layout_mode = 0
+offset_right = 66.0
+offset_bottom = 23.0
+text = "FPS: N/A"
+script = ExtResource("23_wpiqm")
+player = NodePath("../../Player")
+
+[node name="RaycastsTooltip" type="Label" parent="UI" node_paths=PackedStringArray("player")]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -56.5
+offset_right = 56.5
+offset_bottom = 23.0
+grow_horizontal = 2
+text = "block:
+N/A"
+horizontal_alignment = 1
+script = ExtResource("24_d2twu")
+player = NodePath("../../Player")
+
+[node name="Crosshair" type="Control" parent="UI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HorizontalLine" type="ColorRect" parent="UI/Crosshair"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -15.0
+offset_top = -0.5
+offset_right = 15.0
+offset_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VerticalLine" type="ColorRect" parent="UI/Crosshair"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -0.5
+offset_top = -15.0
+offset_right = 0.5
+offset_bottom = 15.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[connection signal="body_entered" from="BlockSpaceChecker" to="Player" method="_on_block_space_checker_body_entered"]
+[connection signal="body_exited" from="BlockSpaceChecker" to="Player" method="_on_block_space_checker_body_exited"]

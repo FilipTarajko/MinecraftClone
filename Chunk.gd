@@ -3,9 +3,8 @@ extends Node3D
 @export var game: Node3D
 @export var blocks_object: Node3D
 @export var rigidbody_script: Script
-var platform_lenght = 17
-var platform_height = 17
-var max_height = 30
+var chunk_offset_x: int
+var chunk_offset_z: int
 
 var blocks = []
 
@@ -19,44 +18,46 @@ func _physics_process(_delta):
 
 
 func generate_terrain():
-	for x in range(platform_lenght):
+	for x in range(game.chunk_lenght):
 		blocks.push_back([])
-		for y in range(max_height):
+		for y in range(game.chunk_height):
 			blocks[x].push_back([])
-			for z in range(platform_lenght):
+			for z in range(game.chunk_lenght):
 				var block = 0 # air
 				if y == 0:
 					block = 1 # bedrock
-				elif y < platform_height/2.0:
+				elif y < game.platform_height/2.0:
 					#block = 2 # stone
 					block = game.obtainable_blocks_indexes.pick_random()
-				elif y < platform_height:
+				elif y < game.platform_height:
 					block = 3 # dirt
-				elif y == platform_height:
+				elif y == game.platform_height:
 					block = 4 # grass
 				blocks[x][y].push_back(block)
 	draw_blocks()
 
 
 func create_mesh_and_collider(x, y, z):
-	place_block(Vector3(x, y, z), blocks[x][y][z])
+	place_block(Vector3(x+chunk_offset_x, y, z), blocks[x][y][z])
 
 
 func draw_blocks():
-	for x in range(platform_lenght):
-		for y in range(max_height):
-			for z in range(platform_lenght):
+	for x in range(game.chunk_lenght):
+		for y in range(game.chunk_height):
+			for z in range(game.chunk_lenght):
 				if check_if_any_face_visible(x, y, z, true):
 					create_mesh_and_collider(x, y, z)
 
 
-func check_if_any_face_visible(x, y, z, can_call_deeper=false):
+func check_if_any_face_visible(x_global, y, z_global, _can_call_deeper=false):
+	var x = int(x_global) % game.chunk_lenght
+	var z = int(z_global) % game.chunk_lenght
 	# check if is air - invisible
 	if blocks[x][y][z] == 0:
 		return false
 	
 	# check if edge of chunk - visible
-	if x == 0 || x == platform_lenght-1 || y == 0 || y == max_height || z == 0 || z == platform_lenght - 1:
+	if x == 0 || x == game.chunk_lenght-1 || y == 0 || y == game.chunk_height || z == 0 || z == game.chunk_lenght - 1:
 		return true
 	
 	# check if neighbors air - visible
@@ -81,11 +82,11 @@ func check_if_any_face_visible(x, y, z, can_call_deeper=false):
 func check_neighboring_blocks_visibilities(x, y, z):
 	return [
 		x>0 && check_if_any_face_visible(x-1, y, z),
-		x<platform_lenght-1 && check_if_any_face_visible(x+1, y, z),
+		x<game.chunk_lenght-1 && check_if_any_face_visible(x+1, y, z),
 		y>0 && check_if_any_face_visible(x, y-1, z),
-		y<max_height-1 && check_if_any_face_visible(x, y+1, z),
+		y<game.chunk_height-1 && check_if_any_face_visible(x, y+1, z),
 		z>0 && check_if_any_face_visible(x, y, z-1),
-		z<platform_lenght-1 && check_if_any_face_visible(x, y, z+1),
+		z<game.chunk_lenght-1 && check_if_any_face_visible(x, y, z+1),
 	]
 
 func destroy_block_node(x, y, z):
@@ -101,6 +102,8 @@ func handle_block_appeared(block_position, block_index):
 	var neighboring_visilities_before = check_neighboring_blocks_visibilities(x, y, z)
 	blocks[x][y][z] = block_index
 	var neighboring_visilities_after = check_neighboring_blocks_visibilities(x, y, z)
+	x += chunk_offset_x
+	z += chunk_offset_z
 	for i in range(6):
 		if neighboring_visilities_before[i] && !neighboring_visilities_after[i]:
 			match i:
@@ -119,9 +122,9 @@ func handle_block_appeared(block_position, block_index):
 
 
 func handle_block_disappeared(block):
-	var x = block.position.x
-	var y = block.position.y
-	var z = block.position.z
+	var x = int(block.position.x) % game.chunk_lenght
+	var y = int(block.position.y) % game.chunk_height
+	var z = int(block.position.z) % game.chunk_lenght
 	var neighboring_visilities_before = check_neighboring_blocks_visibilities(x, y, z)
 	blocks[x][y][z] = 0
 	var neighboring_visilities_after = check_neighboring_blocks_visibilities(x, y, z)
@@ -163,18 +166,20 @@ func place_block(new_block_position, index):
 	var new_block = game.blocks[index].duplicate(false)
 	if new_block is RigidBody3D:
 		new_block.set_script(rigidbody_script)
+		new_block.chunk = self
 	new_block.position = new_block_position
 	new_block.name = game.blocks[index].name
 	blocks_object.add_child(new_block)
 	return new_block
 
 
-func try_place_and_save_obtainable_block(new_block_position):
+func try_place_and_save_obtainable_block(block_position):
+	var new_block_position = Vector3(int(block_position.x) % game.chunk_lenght, int(block_position.y) % game.chunk_height, int(block_position.z) % game.chunk_lenght)
 	if blocks[new_block_position.x][new_block_position.y][new_block_position.z] != 0:
 		return
 	var block_index = game.obtainable_blocks_indexes.pick_random()
-	handle_block_appeared(new_block_position, block_index)
-	var placed_block = place_block(new_block_position, block_index)
+	handle_block_appeared(new_block_position, block_index) # sprawdzić
+	var placed_block = place_block(new_block_position+Vector3(chunk_offset_x, 0, chunk_offset_z), block_index)
 	if placed_block is RigidBody3D:
 		placed_block.chunk = self
 		placed_block.block_index = block_index

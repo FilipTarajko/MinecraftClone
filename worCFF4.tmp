@@ -42,9 +42,8 @@ size = Vector3(1.01, 1.01, 1.01)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_8cqx5"]
 
-[node name="Game" type="Node3D" node_paths=PackedStringArray("chunk")]
+[node name="Game" type="Node3D"]
 script = ExtResource("1_kwi7l")
-chunk = NodePath("Chunk")
 block_types = Array[Resource("res://blocks/block_type.gd")]([null, ExtResource("2_o577k"), ExtResource("4_32riu"), ExtResource("2_4r5x2"), ExtResource("3_uab6h"), ExtResource("5_eg1wa"), ExtResource("6_qihfv"), ExtResource("7_jw8us"), ExtResource("9_largw"), ExtResource("10_5iu17"), ExtResource("11_160op"), ExtResource("12_ul31o")])
 block_broken_particles = ExtResource("13_mkwhk")
 block_destroyed_raycast = ExtResource("19_n3tt6")
@@ -70,6 +69,15 @@ blocks_object = NodePath("Blocks")
 rigidbody_script = ExtResource("15_08ogl")
 
 [node name="Blocks" type="Node3D" parent="Chunk"]
+
+[node name="Chunk2" type="Node3D" parent="." node_paths=PackedStringArray("game", "blocks_object")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 0)
+script = ExtResource("6_l11q7")
+game = NodePath("..")
+blocks_object = NodePath("../Chunk/Blocks")
+rigidbody_script = ExtResource("15_08ogl")
+
+[node name="Blocks" type="Node3D" parent="Chunk2"]
 
 [node name="Player" type="CharacterBody3D" parent="." node_paths=PackedStringArray("camera_stick", "camera", "camera_raycast", "game", "block_highlighter", "block_space_checker")]
 transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 8, 19, 8)

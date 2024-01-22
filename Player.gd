@@ -18,6 +18,7 @@ var is_in_third_person = true
 @onready var default_camera_offset = camera.position
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var raycasted_object_name = ""
+var raycasted_chunk_name = ""
 var is_game_just_started = true
 
 
@@ -76,9 +77,9 @@ func handle_third_person_toggle():
 
 func update_raycasted_object_name(pos_unrounded, chunk):
 	var pos = round(pos_unrounded)
-	var x = pos.x
-	var y = pos.y
-	var z = pos.z
+	var x = int(pos.x) % game.chunk_lenght
+	var y = int(pos.y) % game.chunk_height
+	var z = int(pos.z) % game.chunk_lenght
 	if game.block_types[chunk.blocks[x][y][z]]:
 		raycasted_object_name = game.block_types[chunk.blocks[x][y][z]].name
 
@@ -89,6 +90,7 @@ func handle_raycast_interactions():
 		return
 	var collider_position = camera_raycast.get_collider().position
 	var chunk = game.get_chunk_by_vector3(collider_position)
+	raycasted_chunk_name = "%d, %d" % [chunk.chunk_offset_x / game.chunk_lenght, chunk.chunk_offset_z / game.chunk_lenght]
 	update_raycasted_object_name(collider_position, chunk)
 	block_highlighter.show()
 	block_highlighter.position = collider_position

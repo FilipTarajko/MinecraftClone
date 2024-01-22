@@ -1,6 +1,6 @@
 extends Node3D
 
-@export var chunk: Node3D
+@export var chunks: Array[Node3D]
 
 @export var block_types: Array[Block_Resource]
 @export var block_broken_particles: PackedScene
@@ -11,12 +11,15 @@ var commonly_spawned_blocks_indexes = []
 var obtainable_blocks_indexes = []
 var transparent_blocks_indexes = []
 
+var chunk_lenght = 17
+var chunk_height = 30
+var platform_height = 17
+
 @export var static_block: PackedScene
 @export var rigidbody_block: PackedScene
 
 @export var base_block_mesh: BoxMesh
 @export var transparent_block_mesh: BoxMesh
-var i = 0
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -46,11 +49,17 @@ func _ready():
 		if block_type.obtainable:
 			obtainable_blocks_indexes.push_back(index)
 		index += 1
-	chunk.generate_terrain()
+	for i in range(len(chunks)):
+		chunks[i].chunk_offset_x = i*chunk_lenght
+		chunks[i].chunk_offset_z = 0
+		chunks[i].generate_terrain()
 
 
 func get_chunk_by_vector3(vector):
-	return chunk
+	var chunk_index = floor((vector.x) / 17.0)
+	#print(vector)
+	#print("chunk: %d" % chunk_index)
+	return chunks[chunk_index]
 
 
 func _unhandled_input(event):

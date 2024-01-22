@@ -16,5 +16,6 @@ func _physics_process(_delta):
 		if is_nearly_zero(last_velocity) && is_nearly_zero(linear_velocity.y):
 			position.y = round(position.y)
 			freeze = true
-			chunk.handle_block_appeared(position, block_index)
+			var chunk_pos = Vector3(int(position.x) % chunk.game.chunk_lenght, int(position.y) % chunk.game.chunk_height, int(position.z) % chunk.game.chunk_lenght)
+			chunk.handle_block_appeared(chunk_pos, block_index)
 		last_velocity = linear_velocity.y

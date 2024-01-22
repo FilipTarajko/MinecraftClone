@@ -9,6 +9,7 @@ func _process(_delta):
 	if (!disabled):
 		var label_text = "FPS %d" % Engine.get_frames_per_second() + "\n"
 		label_text += "XYZ: " + str(snapped(player.position, Vector3(0.1,0.1,0.1))) + "\n"
+		label_text += "Chunk: %d, %d" % [floor(player.position.x / float(player.game.chunk_lenght)), floor(player.position.z / float(player.game.chunk_lenght))] + "\n"
 		label_text += "deg rotation.y: " + str(snapped(rad_to_deg(player.camera_stick.rotation.y), 1))
 		set_text(label_text)
 	else:

@@ -12,6 +12,8 @@ func _process(_delta):
 			label_text = "Block:\n"+player.raycasted_object_name
 		else:
 			label_text = ""
+		if player.raycasted_chunk_name:
+			label_text += "\nChunk: "+str(player.raycasted_chunk_name)
 		set_text(label_text)
 	else:
 		set_text("")
