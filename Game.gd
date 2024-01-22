@@ -21,6 +21,7 @@ var chunk_height = 30
 var platform_height = 17
 
 @export var static_block: PackedScene
+@export var transparent_block: PackedScene
 @export var rigidbody_block: PackedScene
 
 @export var base_block_mesh: BoxMesh
@@ -43,6 +44,8 @@ func _ready():
 			continue
 		if block_type.gravity:
 			new_block = rigidbody_block.duplicate(false).instantiate()
+		elif block_type.transparent:
+			new_block = transparent_block.duplicate(false).instantiate()
 		else:
 			new_block = static_block.duplicate(false).instantiate()
 		if block_type.transparent:

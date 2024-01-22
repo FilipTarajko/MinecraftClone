@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://cy3eqee0oii41"]
+
+[ext_resource type="Texture2D" uid="uid://umj5j61vbc7s" path="res://blocks/images/stone.png" id="1_37oe4"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_l7amf"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uixrb"]
+transparency = 1
+albedo_texture = ExtResource("1_37oe4")
+texture_filter = 0
+
+[sub_resource type="BoxMesh" id="BoxMesh_wvhnb"]
+material = SubResource("StandardMaterial3D_uixrb")
+
+[node name="Block" type="StaticBody3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_l7amf")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_wvhnb")

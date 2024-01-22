@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://0au071xpn1ce"]
+[gd_scene load_steps=30 format=3 uid="uid://0au071xpn1ce"]
 
 [ext_resource type="Script" path="res://Game.gd" id="1_b4iv1"]
 [ext_resource type="Resource" uid="uid://b3m4rurkugxxh" path="res://blocks/types/bedrock.tres" id="2_pyqsj"]
@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://q5d3xumgyoic" path="res://blocks/static_block.tscn" id="15_w8n05"]
 [ext_resource type="PackedScene" uid="uid://cxwopura8fu48" path="res://blocks/rigidbody_block.tscn" id="16_sg8y8"]
 [ext_resource type="BoxMesh" uid="uid://c5wlc2dmxb1w7" path="res://blocks/base_block_mesh.tres" id="17_tll6j"]
+[ext_resource type="PackedScene" uid="uid://cy3eqee0oii41" path="res://blocks/transparent_block.tscn" id="17_wagb0"]
 [ext_resource type="BoxMesh" uid="uid://mljtfnek823x" path="res://blocks/transparent_block_mesh.tres" id="18_1c5gj"]
 [ext_resource type="Texture2D" uid="uid://dxk5gtfgsspot" path="res://blocks/highlighter/highlighter_texture.png" id="19_2lbbl"]
 [ext_resource type="PackedScene" uid="uid://nh058x8mnud7" path="res://chunk.tscn" id="20_yg3qg"]
@@ -50,6 +51,7 @@ block_types = Array[Resource("res://blocks/block_type.gd")]([null, ExtResource("
 block_broken_particles = ExtResource("13_k1yes")
 block_destroyed_raycast = ExtResource("14_d1asu")
 static_block = ExtResource("15_w8n05")
+transparent_block = ExtResource("17_wagb0")
 rigidbody_block = ExtResource("16_sg8y8")
 base_block_mesh = ExtResource("17_tll6j")
 transparent_block_mesh = ExtResource("18_1c5gj")

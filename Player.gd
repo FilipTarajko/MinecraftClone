@@ -14,12 +14,20 @@ const JUMP_VELOCITY = 5.0
 var entities_in_checked_area: int
 
 
+var last_hovered_object: Node3D
+var last_hovered_occluder: OccluderInstance3D
+
+
 var is_in_third_person = true
 @onready var default_camera_offset = camera.position
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var raycasted_object_name = ""
 var raycasted_chunk_name = ""
 var is_game_just_started = true
+
+
+func _ready():
+	position = Vector3(game.chunks_in_x*game.chunk_lenght/2, 30, game.chunks_in_z*game.chunk_lenght/2)
 
 
 func _physics_process(delta):
@@ -95,6 +103,20 @@ func handle_raycast_interactions():
 	block_highlighter.show()
 	block_highlighter.position = collider_position
 	var obj = camera_raycast.get_collider()
+	
+	
+	if last_hovered_object != obj:
+		if !!last_hovered_object && last_hovered_occluder:
+			last_hovered_object.add_child(last_hovered_occluder)
+			last_hovered_object = null
+			last_hovered_occluder = null
+		
+		last_hovered_object = obj
+		last_hovered_occluder = last_hovered_object.get_node("OccluderInstance3D")
+		if last_hovered_occluder:
+			last_hovered_object.remove_child(last_hovered_occluder)
+	
+	
 	if Input.is_action_just_pressed("hit"):
 		chunk.handle_destroy_block(obj)
 	var collision_normal = camera_raycast.get_collision_normal()
