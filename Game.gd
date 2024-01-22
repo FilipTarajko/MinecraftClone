@@ -22,13 +22,13 @@ func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	var index = 0
 	for block_type in block_types:
+		var new_block
 		if !block_type:
 			index+=1
-			var new_block = rigidbody_block.duplicate(false).instantiate()
+			new_block = rigidbody_block.duplicate(false).instantiate()
 			blocks.push_back(new_block.duplicate(true))
 			transparent_blocks_indexes.push_back(0)
 			continue
-		var new_block
 		if block_type.gravity:
 			new_block = rigidbody_block.duplicate(false).instantiate()
 		else:

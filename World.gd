@@ -10,7 +10,7 @@ var max_height = 30
 var blocks = []
 
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if Input.is_action_just_pressed("regenerate_chunks"):
 		blocks_object.queue_free()
 		blocks_object = Node3D.new()
@@ -27,7 +27,7 @@ func generate_terrain():
 				var block = 0 # air
 				if y == 0:
 					block = 1 # bedrock
-				elif y < platform_height/2:
+				elif y < platform_height/2.0:
 					#block = 2 # stone
 					block = game.obtainable_blocks_indexes.pick_random()
 				elif y < platform_height:
@@ -81,7 +81,6 @@ func handle_destroy_block(block):
 	particles.emitting = true
 	add_child(particles)
 	var neighboring_visilities_before = check_neighboring_blocks_visibilities(x, y, z)
-	print(neighboring_visilities_before)
 	blocks[x][y][z] = 0
 	var neighboring_visilities_after = check_neighboring_blocks_visibilities(x, y, z)
 	for i in range(6):
@@ -99,7 +98,6 @@ func handle_destroy_block(block):
 					create_mesh_and_collider(x, y, z-1)
 				5:
 					create_mesh_and_collider(x, y, z+1)
-	print(neighboring_visilities_after)
 	var raycast = game.block_destroyed_raycast.instantiate()
 	raycast.block_destroyed_raycast = game.block_destroyed_raycast
 	raycast.world = self

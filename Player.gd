@@ -75,12 +75,19 @@ func handle_third_person_toggle():
 			is_in_third_person = true
 
 
+func update_raycasted_object_name(pos_unrounded):
+	var pos = round(pos_unrounded)
+	var x = pos.x
+	var y = pos.y
+	var z = pos.z
+	raycasted_object_name = game.block_types[world.blocks[x][y][z]].name
+
 func handle_raycast_interactions():
 	if !camera_raycast.is_colliding() || !camera_raycast.get_collider():
 		block_highlighter.hide()
 		raycasted_object_name = ""
 		return
-	raycasted_object_name = camera_raycast.get_collider().name
+	update_raycasted_object_name(camera_raycast.get_collider().position)
 	block_highlighter.show()
 	block_highlighter.position = camera_raycast.get_collider().position
 	var obj = camera_raycast.get_collider()
@@ -98,5 +105,5 @@ func _on_block_space_checker_body_entered(_body):
 	entities_in_checked_area += 1
 
 
-func _on_block_space_checker_body_exited(body):
+func _on_block_space_checker_body_exited(_body):
 	entities_in_checked_area -= 1
